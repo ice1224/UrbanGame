@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "453033489511",
+    "firebase_url": "https://gps-urban-game-1556318663274.firebaseio.com",
+    "project_id": "gps-urban-game-1556318663274",
+    "storage_bucket": "gps-urban-game-1556318663274.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453033489511:android:71cd27f66840f6ae",
+        "android_client_info": {
+          "package_name": "com.kobiela.urbangame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453033489511-ajd2gqbm0dsu3lhhsgcnmlsdic86gsll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFxXfFdBhD2lcuUjNbOKg1q-JJPKMjoiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453033489511-ajd2gqbm0dsu3lhhsgcnmlsdic86gsll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

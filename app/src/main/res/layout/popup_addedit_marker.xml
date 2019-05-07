@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    tools:context=".MapsActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="30dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark"
+            app:cardCornerRadius="30dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_icon_big_add_marker"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/ic_add_location_black_24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_new_marker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Nowy znacznik"
+                    android:textSize="28sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_icon_big_add_marker"/>
+
+                <EditText
+                    android:id="@+id/et_add_riddle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="120dp"
+                    android:maxLines="6"
+                    android:textSize="14sp"
+                    android:hint="Podaj treść zagadki"
+                    android:textColorHint="@color/colorAccent"
+                    android:gravity="top|start"
+                    android:textColor="@color/colorAccent"
+                    android:background="@color/colorPrimary"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_marker"
+                    android:layout_margin="15dp"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_clear_ev"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_clear_black_24dp"
+                    app:layout_constraintRight_toRightOf="@id/et_add_riddle"
+                    app:layout_constraintBottom_toBottomOf="@id/et_add_riddle"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id="@+id/tv_number_of_markers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="1/5"
+                    android:textSize="36sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_add_riddle"/>
+
+
+                <TextView
+                    android:id="@+id/tv_fake_center"
+                    android:layout_width="2dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_number_of_markers"
+                    android:layout_marginTop="25dp"/>
+
+                <Button
+                    android:id="@+id/b_remove_riddle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="REMOVE"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorAccent"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/tv_fake_center"
+                    app:layout_constraintTop_toBottomOf="@id/tv_number_of_markers"
+                    android:layout_marginTop="25dp"/>
+
+                <Button
+                    android:id="@+id/b_add_riddle"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="OK"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorAccent"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/tv_fake_center"
+                    app:layout_constraintTop_toBottomOf="@id/tv_number_of_markers"
+                    android:layout_marginTop="25dp"/>
+
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+
+
+
+
+
+</RelativeLayout>
