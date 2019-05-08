@@ -48,10 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
-    private int i=0;
-    private boolean requestingLocationUpdates = false;
-    private LocationCallback locationCallback;
-    private LocationRequest locationRequest;
 
     private List<Marker> markers = new ArrayList<>();
     private List<String> riddles = new ArrayList<>();
@@ -61,84 +57,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-      /*  createLocationRequest();
-        locationCallback = new LocationCallback() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-           *//*     if (locationResult == null) {
-                    Toast.makeText(MapsActivity.this, "SHIIIIIIIIIIIIIIIIIIIIT", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-*//*
-                    fusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(MapsActivity.this, new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    // Got last known location. In some rare situations this can be null.
-                                    if (location != null) {
-                                        Toast.makeText(MapsActivity.this, String.valueOf(location.getLatitude()) + " "
-                                                + String.valueOf(location.getLongitude()), Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-              //  }
-            }
-        };
-        startLocationUpdates();*/
-    }
-/*
-
-    protected void createLocationRequest() {
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestingLocationUpdates) {
-            startLocationUpdates();
-        }
-    }
 
-    @SuppressLint("MissingPermission")
-    private void startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                null */
-/* Looper *//*
-);
-    }
-
-*/
-
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
-        //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        //mMap.setMapStyle(
-         //       MapStyleOptions.loadRawResourceStyle(
-          //              this, R.raw.night_theme));
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setMapToolbarEnabled(false);
 
@@ -146,14 +77,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             LatLng firstLoc = new LatLng(location.getLatitude(), location.getLongitude());
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(firstLoc));
                         }
                     }
                 });
-        // Add a marker in Sydney and move the camera
 
 
 
@@ -180,23 +109,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return false;
             }
         });
-/*
-        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-            }
-        });*/
-
 
     }
 
@@ -275,7 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public void saveAndPlay(View view) {
+    public void saveAndSummarize(View view) {
         ArrayList<String> game = new ArrayList<>();
         for (int j = 0; j < markers.size(); j++) {
             game.add(String.valueOf(markers.get(j).getPosition().latitude));
@@ -283,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             game.add(riddles.get(j));
         }
 
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, TrackSummaryActivity.class);
         intent.putStringArrayListExtra("GAME", game);
         startActivity(intent);
     }

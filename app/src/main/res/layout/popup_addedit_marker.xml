@@ -55,19 +55,20 @@
 
                 <EditText
                     android:id="@+id/et_add_riddle"
+                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="120dp"
                     android:maxLines="6"
                     android:textSize="14sp"
-                    android:hint="Podaj treść zagadki"
+                    android:autofillHints="Podaj treść zagadki"
                     android:textColorHint="@color/colorAccent"
-                    android:gravity="top|start"
                     android:textColor="@color/colorAccent"
                     android:background="@color/colorPrimary"
                     app:layout_constraintTop_toBottomOf="@id/tv_new_marker"
                     android:layout_margin="15dp"
                     android:padding="10dp"
+                    android:gravity="top|start"
                     android:scrollbars="vertical"
                     />
 
