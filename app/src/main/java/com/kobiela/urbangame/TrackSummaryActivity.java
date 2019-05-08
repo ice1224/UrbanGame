@@ -50,6 +50,10 @@ public class TrackSummaryActivity extends AppCompatActivity {
                 else{
                     saveToFirebase();
                     Toast.makeText(TrackSummaryActivity.this, "Track saved!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(TrackSummaryActivity.this, MapsActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra(MapsActivity.SHOULD_FINISH, true);
+                    startActivity(intent);
                     TrackSummaryActivity.this.finish();
                 }
             }

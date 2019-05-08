@@ -46,6 +46,7 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    public static final String SHOULD_FINISH = "SHOULD_FINISH";
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -62,6 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (getIntent().getBooleanExtra(SHOULD_FINISH, false)) {
+            finish();
+        }
     }
 
 
