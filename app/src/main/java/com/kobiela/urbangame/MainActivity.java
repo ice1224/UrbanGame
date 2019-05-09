@@ -18,7 +18,10 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
-
+    /**
+     * currentVideoPosition potrzebne czy nie?
+     *
+     */
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private VideoView vvBackground;
     MediaPlayer mediaPlayer;
@@ -71,10 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick2(View view) {
-        Dialog myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.popup_success);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+        startActivity(new Intent(this, TrackChoiceActivity.class));
     }
 
 

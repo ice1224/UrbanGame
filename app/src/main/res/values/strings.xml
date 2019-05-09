@@ -2,4 +2,8 @@
     <string name="app_name">UrbanGame</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_game">Map</string>
+
+    <string name="title_activity_track_choice">TrackChoiceActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

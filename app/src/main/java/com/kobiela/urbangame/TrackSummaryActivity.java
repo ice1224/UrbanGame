@@ -96,7 +96,7 @@ public class TrackSummaryActivity extends AppCompatActivity {
                             riddlesToSave.put("COORDS", coords);
                             riddlesToSave.put("RIDDLE", riddle);
 
-                            documentReference.collection("riddles").add(riddlesToSave);
+                            documentReference.collection("riddles").document(String.valueOf(i)).set(riddlesToSave);
                         }
                     }
                 });

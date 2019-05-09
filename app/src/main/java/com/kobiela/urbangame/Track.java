@@ -6,12 +6,19 @@ public class Track {
     private String title;
     private String description;
     private String location;
+    private List<Riddle> riddles;
 
     public Track(String title, String description, String location, List<Riddle> riddles) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.riddles = riddles;
+    }
+
+    public Track(String title, String description, String location) {
+        this.title = title;
+        this.description = description;
+        this.location = location;
     }
 
     public String getTitle() {
@@ -46,6 +53,5 @@ public class Track {
         this.riddles = riddles;
     }
 
-    private List<Riddle> riddles;
 
 }
