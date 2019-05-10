@@ -54,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<String> riddles = new ArrayList<>();
     private int numberMapType = 0;
 
+    boolean buttonClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,18 +109,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onMarkerClick(final Marker marker) {
 
                 openDialogWindow(marker, false);
-
-
-
-                //marker.remove();
                 return false;
             }
         });
 
     }
 
-    private void openDialogWindow(final Marker marker, final boolean isNew) {
+    private void openDialogWindow(final Marker marker, final boolean isMarkerNew) {
 
+        buttonClicked = false;
         final int ind = markers.indexOf(marker);
         final int numberOfAll = markers.size();
 
@@ -152,7 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        if(isNew){
+        if(isMarkerNew){
             iv_icon.setImageResource(R.drawable.ic_add_location_black_24dp);
             tv_new_edit_marker.setText("Nowy znacznik");
             tv_number_of_markers.setText((numberOfAll+1) + "/" + (numberOfAll+1));
@@ -168,13 +167,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         b_add_riddle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isNew) {
+                if(isMarkerNew) {
                     riddles.add(et_new_edit_riddle.getText().toString());
                     markers.add(marker);
                 }
                 else{
                     riddles.set(ind,et_new_edit_riddle.getText().toString());
                 }
+                buttonClicked = true;
                 dialog.cancel();
             }
         });
@@ -183,11 +183,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 marker.remove();
-                if(!isNew) {
+                if(!isMarkerNew) {
                     markers.remove(ind);
                     riddles.remove(ind);
                 }
+                buttonClicked = true;
                 dialog.cancel();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(!buttonClicked && isMarkerNew) {
+                    marker.remove();
+                }
             }
         });
     }
