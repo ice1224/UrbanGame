@@ -1,7 +1,10 @@
 package com.kobiela.urbangame;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,21 +48,48 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
 
     @Override
     public void onBindViewHolder(@NonNull TrackListViewHolder holder, final int position) {
-        holder.trackTitle.setText(trackList.get(position).getTitle());
-        holder.trackLocation.setText(trackList.get(position).getLocation());
+        final String title = trackList.get(position).getTitle();
+        final String description = trackList.get(position).getDescription();
+        final String location = trackList.get(position).getLocation();
+
+        holder.trackTitle.setText(title);
+        holder.trackLocation.setText(location);
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           /*     Toast.makeText(context, String.valueOf(position), Toast.LENGTH_LONG).show();
-                ArrayList<String> game = new ArrayList<>();
-                for (int j = 0; j < markers.size(); j++) {
-                    game.add(String.valueOf(markers.get(j).getPosition().latitude));
-                    game.add(String.valueOf(markers.get(j).getPosition().longitude));
-                    game.add(riddles.get(j));
-                }
-*/
-                startGame(position);
+                openDialogWindow(position, title, description, location);
+            }
+        });
+    }
 
+    private void openDialogWindow(final int position, String title, String description, String location){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.popup_track_details);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        TextView tvTrackTitle = dialog.findViewById(R.id.tv_track_details_title);
+        TextView tvTrackDescription = dialog.findViewById(R.id.tv_track_details_description);
+        TextView tvTrackLocation = dialog.findViewById(R.id.tv_track_details_location);
+        Button bPlayGame = dialog.findViewById(R.id.b_play_game);
+        Button bCancelGame = dialog.findViewById(R.id.b_cancel_game);
+
+        tvTrackTitle.setText(title);
+        tvTrackDescription.setText(description);
+        tvTrackLocation.setText(location);
+
+        bPlayGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startGame(position);
+            }
+        });
+
+        bCancelGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
             }
         });
     }
