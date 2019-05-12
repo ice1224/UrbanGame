@@ -21,13 +21,15 @@
 
     <EditText
         android:id="@+id/et_search_track"
-        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_choose_track_title"
+        android:padding="5dp"
         android:layout_margin="25dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_choose_track_title"
+        android:background="@color/colorPrimary"
         android:textColor="@color/colorAccent"
-        android:background="@color/colorPrimary"/>
+        android:textColorHint="@color/colorTransparentAccent"
+        android:hint="Search"/>
 
     <ImageView
         android:id="@+id/iv_icon_search"
