@@ -25,6 +25,8 @@ import java.util.List;
 public class TrackChoiceActivity extends AppCompatActivity {
 
     private static final String TAG = "TrackChoiceActivity";
+    private final List<String> idsListFull = new ArrayList<>();
+    private final List<Track> trackListFull = new ArrayList<>();
     private List<String> idsList = new ArrayList<>();
     private List<Track> trackList = new ArrayList<>();
 
@@ -48,24 +50,34 @@ public class TrackChoiceActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                readData(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                /*readData(s.toString());
+                Toast.makeText(TrackChoiceActivity.this, s.toString(),Toast.LENGTH_SHORT).show();*/
+                trackList.clear();
+                idsList.clear();
+                for (int i = 0; i < trackListFull.size(); i++) {
 
+                    if(trackListFull.get(i).getTitle().toLowerCase().contains(s.toString().toLowerCase())
+                    || trackListFull.get(i).getDescription().toLowerCase().contains(s.toString().toLowerCase())
+                    || trackListFull.get(i).getLocation().toLowerCase().contains(s.toString().toLowerCase())){
+                        trackList.add(trackListFull.get(i));
+                        idsList.add(idsListFull.get(i));
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
             }
         });
 
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        readData("");
+        readData();
     }
 
-    private void readData(final String toSearch) {
-        trackList.clear();
-        idsList.clear();
+    private void readData() {
         FirebaseFirestore.getInstance().collection("tracksCollection")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -78,12 +90,11 @@ public class TrackChoiceActivity extends AppCompatActivity {
                                 String title = document.get("TITLE").toString();
                                 String description = document.get("DESCRIPTION").toString();
                                 String location = document.get("LOCATION").toString();
-                                if(title.contains(toSearch) || location.contains(toSearch)){
-                                    trackList.add(new Track(title,description,location));
-                                    idsList.add(document.getId());
-                                }
+                                trackListFull.add(new Track(title,description,location));
+                                trackList.add(new Track(title,description,location));
+                                idsListFull.add(document.getId());
+                                idsList.add(document.getId());
                             }
-                            Toast.makeText(TrackChoiceActivity.this, trackList.size() + " " + idsList.size(), Toast.LENGTH_LONG).show();
                             initializeRecyclerView();
                         } else {
                             Toast.makeText(TrackChoiceActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();

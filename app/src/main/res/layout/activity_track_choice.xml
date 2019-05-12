@@ -7,23 +7,47 @@
     tools:context=".TrackChoiceActivity"
     android:background="@color/colorPrimaryDark">
 
-    <EditText
-        android:id="@+id/et_search_track"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_choose_track_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:text="Choose the track"/>
+
+    <EditText
+        android:id="@+id/et_search_track"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_choose_track_title"
         android:layout_margin="25dp"
         android:textColor="@color/colorAccent"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimary"/>
+
+    <ImageView
+        android:id="@+id/iv_icon_search"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_search_black_24dp"
+        app:layout_constraintTop_toTopOf="@id/et_search_track"
+        app:layout_constraintBottom_toBottomOf="@id/et_search_track"
+        app:layout_constraintRight_toRightOf="@id/et_search_track"
+        android:layout_marginRight="5dp"
         />
 
     <android.support.v7.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/et_search_track"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="25dp"
         android:background="@color/colorPrimary"
         android:id="@+id/rv_tracks_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.8"
         android:layout_margin="25dp"
         >
 
