@@ -3,13 +3,19 @@ package com.kobiela.urbangame;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.InputType;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +55,9 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng currentCoords;
     private static final int ROUNDING_ACC = 4;
 
+    private static boolean isApplicationStopped = false;
+    private static String CHANNEL_ID = "notification_channel_01";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +68,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        createNotificationChannel();
 
         handleGame();
         updateView();
@@ -76,23 +87,39 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
 
-
-
                                     Toast.makeText(GameActivity.this,
-                                    "TO FOUND:\n" +
-                                    String.valueOf(currentCoords.latitude) + "   |   " + String.valueOf(currentCoords.longitude) + "\n" +
-                                    "CURRENT:\n" +
-                                    String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
-                                    Toast.LENGTH_LONG).show();
+                                            "TO FOUND:\n" +
+                                                    String.valueOf(currentCoords.latitude) + "   |   " + String.valueOf(currentCoords.longitude) + "\n" +
+                                                    "CURRENT:\n" +
+                                                    String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
+                                            Toast.LENGTH_LONG).show();
 
-                                    if(currentCoords.latitude == round(location.getLatitude()) &&
-                                       currentCoords.longitude == round(location.getLongitude())){
+                                    if (currentCoords.latitude == round(location.getLatitude()) &&
+                                            currentCoords.longitude == round(location.getLongitude())) {
 
+                                        if(isApplicationStopped){
+                                            Intent intent = getIntent();
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            PendingIntent pendingIntent = PendingIntent.getActivity(GameActivity.this, 0, intent, 0);
+
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(GameActivity.this, CHANNEL_ID)
+                                                    .setSmallIcon(R.drawable.ic_star_black_24dp)
+                                                    .setContentTitle("Gratulacje")
+                                                    .setContentText("Dotarłeś w dobre miejsce")
+                                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                                    .setContentIntent(pendingIntent)
+                                                    .setAutoCancel(true);
+                                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
+                                            notificationManager.notify(1, builder.build());
+                                            Toast.makeText(GameActivity.this, "STOPPED", Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
                                             Dialog dialog = new Dialog(GameActivity.this);
                                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                             dialog.setContentView(R.layout.popup_success);
                                             dialog.show();
-                                            updateView();
+                                        }
+                                        updateView();
                                     }
                                 }
                             }
@@ -100,7 +127,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         startLocationUpdates();
-
     }
 
     private void handleGame() {
@@ -146,6 +172,12 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        isApplicationStopped = false;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (requestingLocationUpdates) {
@@ -159,10 +191,22 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                 locationCallback,
                 null /* Looper */);
     }
-
+/*
     @Override
     protected void onPause() {
         super.onPause();
+        stopLocationUpdates();
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isApplicationStopped = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         stopLocationUpdates();
     }
 
@@ -170,15 +214,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -208,6 +243,25 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(ROUNDING_ACC, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        /**
+         * name i description powinny mieć getString(R.string.channel_name); itp/
+         * **/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "NotificationsChannel";
+            String description = "Channel to send notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 }
