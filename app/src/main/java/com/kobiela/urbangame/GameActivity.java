@@ -52,8 +52,9 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Riddle> game = new ArrayList<>();
     private TextView tvRiddleText;
     private int currentNumber = -1;
-    private LatLng currentCoords;
+    private LatLng currentRiddleCoords;
     private static final int ROUNDING_ACC = 4;
+    private static final int ACC_RANGE = 2;
 
     private static boolean isApplicationStopped = false;
     private static String CHANNEL_ID = "notification_channel_01";
@@ -84,40 +85,21 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                         .addOnSuccessListener(GameActivity.this, new OnSuccessListener<Location>() {
                             @Override
                             public void onSuccess(Location location) {
-                                // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
 
-                                    Toast.makeText(GameActivity.this,
-                                            "TO FOUND:\n" +
-                                                    String.valueOf(currentCoords.latitude) + "   |   " + String.valueOf(currentCoords.longitude) + "\n" +
+                                    Toast.makeText(GameActivity.this,"TO FOUND:\n" +
+                                                    String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                     "CURRENT:\n" +
                                                     String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
                                             Toast.LENGTH_LONG).show();
 
-                                    if (currentCoords.latitude == round(location.getLatitude()) &&
-                                            currentCoords.longitude == round(location.getLongitude())) {
+                                    if (isLocationCorrect(location.getLatitude(), location.getLongitude())) {
 
                                         if(isApplicationStopped){
-                                            Intent intent = getIntent();
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            PendingIntent pendingIntent = PendingIntent.getActivity(GameActivity.this, 0, intent, 0);
-
-                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(GameActivity.this, CHANNEL_ID)
-                                                    .setSmallIcon(R.drawable.ic_star_black_24dp)
-                                                    .setContentTitle("Gratulacje")
-                                                    .setContentText("Dotarłeś w dobre miejsce")
-                                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                                    .setContentIntent(pendingIntent)
-                                                    .setAutoCancel(true);
-                                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
-                                            notificationManager.notify(1, builder.build());
-                                            Toast.makeText(GameActivity.this, "STOPPED", Toast.LENGTH_LONG).show();
+                                            sendNotification();
                                         }
                                         else {
-                                            Dialog dialog = new Dialog(GameActivity.this);
-                                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                            dialog.setContentView(R.layout.popup_success);
-                                            dialog.show();
+                                           openDialogWindow();
                                         }
                                         updateView();
                                     }
@@ -127,6 +109,39 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         startLocationUpdates();
+    }
+
+    private boolean isLocationCorrect(double currentLat, double currentLng){
+        currentLat = round(currentLat) * ROUNDING_ACC;
+        currentLng = round(currentLng) * ROUNDING_ACC;
+
+        return Math.abs(currentLat - currentRiddleCoords.latitude) <= ACC_RANGE
+            && Math.abs(currentLng - currentRiddleCoords.longitude)<=ACC_RANGE;
+
+    }
+
+    private void sendNotification(){
+        Intent intent = getIntent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(GameActivity.this, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(GameActivity.this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_star_black_24dp)
+                .setContentTitle("Gratulacje")
+                .setContentText("Dotarłeś w dobre miejsce")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
+        notificationManager.notify(1, builder.build());
+        Toast.makeText(GameActivity.this, "STOPPED", Toast.LENGTH_LONG).show();
+    }
+
+    private void openDialogWindow(){
+        Dialog dialog = new Dialog(GameActivity.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.popup_success);
+        dialog.show();
     }
 
     private void handleGame() {
@@ -155,7 +170,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             }
             ++currentNumber;
             System.out.println(currentNumber);
-            currentCoords = new LatLng(
+            currentRiddleCoords = new LatLng(
                     round(game.get(currentNumber).getCoords().latitude),
                     round(game.get(currentNumber).getCoords().longitude));
             tvRiddleText.setText(game.get(currentNumber).getRiddleText());
