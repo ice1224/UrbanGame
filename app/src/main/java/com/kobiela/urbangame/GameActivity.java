@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +56,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private int currentNumber = -1;
     private LatLng currentRiddleCoords;
     private static final int ROUNDING_ACC = 4;
-    private static final int ACC_RANGE = 2;
+    private static final int RANGE = 4;
 
     private static boolean isApplicationStopped = false;
     private static String CHANNEL_ID = "notification_channel_01";
@@ -85,21 +87,22 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                         .addOnSuccessListener(GameActivity.this, new OnSuccessListener<Location>() {
                             @Override
                             public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
 
-                                    Toast.makeText(GameActivity.this,"TO FOUND:\n" +
-                                                    String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
-                                                    "CURRENT:\n" +
-                                                    String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
-                                            Toast.LENGTH_LONG).show();
+                                Toast.makeText(GameActivity.this,"TO FOUND:\n" +
+                                                String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
+                                                "CURRENT:\n" +
+                                                String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
+                                        Toast.LENGTH_LONG).show();
 
-                                    if (isLocationCorrect(location.getLatitude(), location.getLongitude())) {
 
+                                    if (isPositionInRange(location.getLatitude(), location.getLongitude())) {
                                         if(isApplicationStopped){
                                             sendNotification();
                                         }
                                         else {
-                                           openDialogWindow();
+                                            openDialogWindow();
                                         }
                                         updateView();
                                     }
@@ -111,13 +114,24 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         startLocationUpdates();
     }
 
-    private boolean isLocationCorrect(double currentLat, double currentLng){
-        currentLat = round(currentLat) * ROUNDING_ACC;
-        currentLng = round(currentLng) * ROUNDING_ACC;
+    private boolean isPositionInRange(double currentLatitude, double currentLongitude){
+        double latDif = Math.abs(round(currentLatitude) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.latitude * Math.pow(10,ROUNDING_ACC));
+        double lngDif = Math.abs(round(currentLongitude) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.longitude * Math.pow(10,ROUNDING_ACC));
+        return (latDif <= RANGE && lngDif <= RANGE);
+    }
 
-        return Math.abs(currentLat - currentRiddleCoords.latitude) <= ACC_RANGE
-            && Math.abs(currentLng - currentRiddleCoords.longitude)<=ACC_RANGE;
-
+    private void openDialogWindow(){
+        final Dialog dialog = new Dialog(GameActivity.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.popup_success);
+        Button btSuccessOk = dialog.findViewById(R.id.b_ok_dialog_success);
+        btSuccessOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void sendNotification(){
@@ -135,13 +149,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
         notificationManager.notify(1, builder.build());
         Toast.makeText(GameActivity.this, "STOPPED", Toast.LENGTH_LONG).show();
-    }
-
-    private void openDialogWindow(){
-        Dialog dialog = new Dialog(GameActivity.this);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.popup_success);
-        dialog.show();
     }
 
     private void handleGame() {
