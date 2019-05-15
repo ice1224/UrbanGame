@@ -31,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -56,7 +57,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private int currentNumber = -1;
     private LatLng currentRiddleCoords;
     private static final int ROUNDING_ACC = 4;
-    private static final int RANGE = 4;
+    private static final int RANGE = 1;
 
     private static boolean isApplicationStopped = false;
     private static String CHANNEL_ID = "notification_channel_01";
@@ -97,7 +98,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                                         Toast.LENGTH_LONG).show();
 
 
-                                    if (isPositionInRange(location.getLatitude(), location.getLongitude())) {
+                                    if (currentNumber < game.size() && isPositionInRange(location.getLatitude(), location.getLongitude())) {
                                         if(isApplicationStopped){
                                             sendNotification();
                                         }
@@ -129,6 +130,9 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                if(currentNumber == game.size()){
+                    GameActivity.this.finish();
+                }
             }
         });
         dialog.show();
@@ -168,7 +172,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void updateView(){
-        if(currentNumber<game.size()) {
+        if(currentNumber < game.size()) {
             if (currentNumber >= 0) {
                 mMap.addMarker(new MarkerOptions()
                         .position(game.get(currentNumber).getCoords())
@@ -177,13 +181,16 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             }
             ++currentNumber;
             System.out.println(currentNumber);
-            currentRiddleCoords = new LatLng(
-                    round(game.get(currentNumber).getCoords().latitude),
-                    round(game.get(currentNumber).getCoords().longitude));
-            tvRiddleText.setText(game.get(currentNumber).getRiddleText());
+            if(currentNumber < game.size()) {
+                currentRiddleCoords = new LatLng(
+                        round(game.get(currentNumber).getCoords().latitude),
+                        round(game.get(currentNumber).getCoords().longitude));
+                tvRiddleText.setText(game.get(currentNumber).getRiddleText());
+            }
         }
         else{
-
+            stopLocationUpdates();
+            openDialogWindow();
         }
     }
 
@@ -199,26 +206,12 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         isApplicationStopped = false;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestingLocationUpdates) {
-            startLocationUpdates();
-        }
-    }
-
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(locationRequest,
                 locationCallback,
                 null /* Looper */);
     }
-/*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }*/
 
     @Override
     protected void onStop() {
@@ -244,7 +237,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.night_theme));
-
+        UiSettings uiSettings = mMap.getUiSettings();
+        uiSettings.setMapToolbarEnabled(false);
 
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {

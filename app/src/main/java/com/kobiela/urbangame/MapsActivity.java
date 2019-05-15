@@ -77,8 +77,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.night_theme));
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setMapToolbarEnabled(false);
+
 
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -153,13 +155,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(isMarkerNew){
             iv_icon.setImageResource(R.drawable.ic_add_location_black_24dp);
-            tv_new_edit_marker.setText("Nowy znacznik");
-            tv_number_of_markers.setText((numberOfAll+1) + "/" + (numberOfAll+1));
+            tv_new_edit_marker.setText(R.string.tv_ma_new_marker);
+            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, numberOfAll+1, numberOfAll+1));
         }
         else {
             iv_icon.setImageResource(R.drawable.ic_edit_location_black_24dp);
-            tv_new_edit_marker.setText("Edytuj znacznik");
-            tv_number_of_markers.setText((ind+1) + "/" + numberOfAll);
+            tv_new_edit_marker.setText(R.string.tv_ma_edit_marker);
+            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, ind+1, numberOfAll));
             et_new_edit_riddle.setText(riddles.get(ind));
         }
 
@@ -218,9 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void changeMapType(View view) {
         switch (numberMapType){
             case 0: {
-                mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.night_theme));
+                mMap.setMapStyle(new MapStyleOptions("[]"));
                 break;
             }
             case 1: {
@@ -234,7 +234,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case 4: mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); break;
             case 5: {
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                mMap.setMapStyle(new MapStyleOptions("[]"));
+                mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                this, R.raw.night_theme));
                 break;
             }
         }

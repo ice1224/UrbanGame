@@ -17,10 +17,11 @@
         android:layout_marginTop="25dp"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
-        android:text="Choose the track"/>
+        android:text="@string/tv_tca_choose_track_title"/>
 
     <EditText
         android:id="@+id/et_search_track"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -29,7 +30,7 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorTransparentAccent"
-        android:hint="Search"/>
+        android:hint="@string/hint_tca_search"/>
 
     <ImageView
         android:id="@+id/iv_icon_search"
@@ -39,7 +40,7 @@
         app:layout_constraintTop_toTopOf="@id/et_search_track"
         app:layout_constraintBottom_toBottomOf="@id/et_search_track"
         app:layout_constraintRight_toRightOf="@id/et_search_track"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         />
 
     <android.support.v7.widget.RecyclerView

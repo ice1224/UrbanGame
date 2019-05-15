@@ -19,7 +19,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="15dp"
-            android:text="ZAGADKA"
+            android:text="@string/tv_ga_riddle"
             android:textSize="28sp"
             android:textColor="@color/colorAccent"/>
 

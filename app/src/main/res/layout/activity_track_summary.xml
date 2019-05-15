@@ -10,6 +10,8 @@
     <EditText
         android:id="@+id/et_track_title"
         android:inputType="text"
+        android:hint="@string/et_tsa_hint_title"
+        android:textColorHint="@color/colorTransparentAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/et_track_description"
@@ -24,7 +26,9 @@
 
     <EditText
         android:id="@+id/et_track_description"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:hint="@string/et_tsa_hint_description"
+        android:textColorHint="@color/colorTransparentAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|start"
@@ -43,6 +47,8 @@
     <EditText
         android:id="@+id/et_track_location"
         android:inputType="text"
+        android:hint="@string/et_tsa_hint_location"
+        android:textColorHint="@color/colorTransparentAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/et_track_description"
@@ -59,7 +65,7 @@
         android:id="@+id/b_save_track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/b_tsa_save"
         app:layout_constraintTop_toBottomOf="@id/et_track_location"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

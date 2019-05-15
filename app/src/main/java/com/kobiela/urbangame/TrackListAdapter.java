@@ -42,8 +42,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
     @Override
     public TrackListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_track_item, parent,false);
-        TrackListViewHolder holder = new TrackListViewHolder(view);
-        return holder;
+        return new TrackListViewHolder(view);
     }
 
     @Override
@@ -83,6 +82,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
             @Override
             public void onClick(View v) {
                 startGame(position);
+                dialog.cancel();
             }
         });
 
@@ -115,7 +115,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                             intent.putStringArrayListExtra("GAME", game);
                             context.startActivity(intent);
                         } else {
-                            //Toast.makeText(TrackChoiceActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

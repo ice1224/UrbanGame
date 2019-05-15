@@ -6,4 +6,39 @@
     <string name="title_activity_track_choice">TrackChoiceActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--Main Activity-->
+    <string name="b_play">Play</string>
+    <string name="b_add_track">Add track</string>
+
+    <!--Track Choice Activity-->
+    <string name="tv_tca_choose_track_title">Choose the track!</string>
+    <string name="hint_tca_search">Search</string>
+        <!--Popup track details-->
+        <string name="b_ptd_cancel">Cancel</string>
+        <string name="b_ptd_play">Play</string>
+
+    <!--Game Activity-->
+    <string name="tv_ga_riddle">Riddle</string>
+        <!--Popup success-->
+        <string name="tv_ps_congratulations">Congratulations!</string>
+        <string name="tv_ps_congratulations_text">You have found the right location</string>
+        <string name="b_ps_ok">OK</string>
+
+    <!--Maps Activity-->
+    <string name="tv_ma_new_marker">New Marker</string>
+    <string name="tv_ma_edit_marker">Edit Marker</string>
+    <string name="tv_ma_which_marker">%1$d / %2$d</string>
+    <string name="b_ma_save">SAVE</string>
+        <!--Popup add edit track-->
+        <string name="hint_et_pae_riddle_text">Text of the riddle</string>
+        <string name="b_et_pae_popup_remove">REMOVE</string>
+        <string name="b_et_pae_popup_ok">OK</string>
+
+    <!--Track Summary Activity-->
+    <string name="et_tsa_hint_title">Title</string>
+    <string name="et_tsa_hint_description">Description</string>
+    <string name="et_tsa_hint_location">Location</string>
+    <string name="b_tsa_save">SAVE</string>
+
 </resources>
