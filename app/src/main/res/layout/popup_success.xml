@@ -89,7 +89,7 @@
                     android:id="@+id/b_ok_dialog_success"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
-                    android:text="OK"
+                    android:text="@string/b_ps_ok"
                     android:textColor="@color/colorPrimaryDark"
                     android:background="@color/colorAccent"
                     android:textSize="28sp"
