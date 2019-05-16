@@ -30,6 +30,11 @@
         described by the riddle. You can leave app by pressing the home button and it will still work in background,
         sending you the notification if you are in the right place.</string>
 
+        <!--Popup continue-->
+        <string name="tv_ga_pc_continue_game">Do you want to continue last game?</string>
+        <string name="b_ga_pc_start_new">Start New</string>
+        <string name="b_ga_pc_continue">Continue</string>
+
     <!--Maps Activity-->
     <string name="tv_ma_new_marker">New Marker</string>
     <string name="tv_ma_edit_marker">Edit Marker</string>
@@ -59,6 +64,8 @@
     <string name="b_tsa_save">SAVE</string>
 
     <!--Notifications-->
+    <string name="notification_title">Congratulations!</string>
+    <string name="notification_text">You have found the right place</string>
     <string name="notification_channel_name">NotificationsChannel</string>
     <string name="notification_channel_description">Notify when user found right place</string>
 

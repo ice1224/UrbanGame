@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -64,9 +66,13 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int RANGE = 1;
 
     private static boolean isApplicationStopped = false;
+    private boolean startCheckingPosition = false;
     private static String CHANNEL_ID = "notification_channel_01";
     private Button bMapChange;
     private Button bMapInfo;
+
+    String trackId;
+    int riddleNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +104,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onSuccess(Location location) {
                                 // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
+                                if (location != null && startCheckingPosition) {
 
                                 Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
@@ -112,7 +118,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                                             sendNotification();
                                         }
                                         else {
-                                            openDialogWindow();
+                                            openDialogWindowSuccess();
                                         }
                                         updateView();
                                     }
@@ -151,6 +157,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Utils.changeMapType(GameActivity.this, numberMapType, mMap);
+                numberMapType = ++numberMapType%6;
             }
         });
     }
@@ -161,7 +168,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         return (latDif <= RANGE && lngDif <= RANGE);
     }
 
-    private void openDialogWindow(){
+    private void openDialogWindowSuccess(){
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.popup_success);
@@ -178,6 +185,43 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         dialog.show();
     }
 
+    private void openDialogWindowContinue(final String savedState){
+        final Dialog dialog = new Dialog(GameActivity.this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.popup_continue_game);
+
+        Button bNewGame = dialog.findViewById(R.id.b_start_new);
+        bNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button bContinue = dialog.findViewById(R.id.b_continue);
+        bContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                riddleNumber = Integer.valueOf(savedState);
+                while(currentNumber!=riddleNumber) {
+                    updateView();
+                }
+            }
+        });
+
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                startCheckingPosition = true;
+            }
+        });
+
+        dialog.show();
+
+    }
+
     private void sendNotification(){
         Intent intent = getIntent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -185,19 +229,22 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(GameActivity.this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_star_black_24dp)
-                .setContentTitle("Gratulacje")
-                .setContentText("Dotarłeś w dobre miejsce")
+                .setContentTitle(getString(R.string.notification_title))
+                .setContentText(getString(R.string.notification_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
+                .setVibrate(new long[] { 1000, 1000})
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setAutoCancel(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
         notificationManager.notify(1, builder.build());
-        Toast.makeText(GameActivity.this, "STOPPED", Toast.LENGTH_LONG).show();
+        this.finish();
     }
 
     private void handleGame() {
         Intent intent = getIntent();
         ArrayList<String> gameAL = intent.getStringArrayListExtra("GAME");
+
 
         for (int i = 0; i <= gameAL.size()-3; i=i+3) {
             System.out.print(gameAL.get(i) + "   |   ");
@@ -208,6 +255,20 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                     gameAL.get(i),
                     gameAL.get(i+1),
                     gameAL.get(i+2)));
+        }
+
+    }
+
+    public void checkIfSaved(){
+        trackId = getIntent().getStringExtra("TRACK_ID");
+
+        String savedState = Utils.getDefaults(trackId, this);
+
+        if(savedState!=null){
+            openDialogWindowContinue(savedState);
+        }
+        else{
+            startCheckingPosition = true;
         }
     }
 
@@ -232,7 +293,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         }
         else{
             stopLocationUpdates();
-            openDialogWindow();
+            openDialogWindowSuccess();
         }
     }
 
@@ -265,6 +326,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onDestroy() {
         super.onDestroy();
         stopLocationUpdates();
+        Utils.setDefaults(trackId, String.valueOf(currentNumber), this);
     }
 
     private void stopLocationUpdates() {
@@ -281,7 +343,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                         this, R.raw.night_theme));
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setMapToolbarEnabled(false);
-
+        checkIfSaved();
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override

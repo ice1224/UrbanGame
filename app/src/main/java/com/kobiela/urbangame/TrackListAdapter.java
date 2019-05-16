@@ -81,7 +81,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         bPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame(position);
+                startGame(idsList.get(position));
                 dialog.cancel();
             }
         });
@@ -94,8 +94,8 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         });
     }
 
-    private void startGame(final int position) {
-        FirebaseFirestore.getInstance().collection("tracksCollection").document(idsList.get(position)).collection("riddles")
+    private void startGame(final String id) {
+        FirebaseFirestore.getInstance().collection("tracksCollection").document(id).collection("riddles")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -113,7 +113,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                             }
                             Intent intent = new Intent(context, GameActivity.class);
                             intent.putStringArrayListExtra("GAME", game);
-                            intent.putExtra("TRACK_ID", idsList.get(position));
+                            intent.putExtra("TRACK_ID", id);
                             context.startActivity(intent);
                         } else {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();

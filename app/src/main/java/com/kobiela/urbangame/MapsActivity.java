@@ -83,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Utils.changeMapType(MapsActivity.this, numberMapType, mMap);
+                numberMapType = ++numberMapType%6;
             }
         });
 
