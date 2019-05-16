@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">UrbanGame</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_game">Map</string>
+    <string name="title_activity_maps">Create</string>
+    <string name="title_activity_game">Play</string>
 
     <string name="title_activity_track_choice">TrackChoiceActivity</string>
     <string name="dummy_button">Dummy Button</string>
@@ -9,7 +9,23 @@
 
     <!--Main Activity-->
     <string name="b_play">Play</string>
-    <string name="b_add_track">Add track</string>
+    <string name="b_add_track">Create</string>
+    <string name="b_info">Info</string>
+        <!--Popup info-->
+        <string name="tv_first">This is Urban Game. Urban game is type of game based on your movement and location. This
+            game allows you to play and create urban games. Every game or track consists of several riddles in particular order.
+            Each riddle contains a hint about the place to find. The track may be based on most beautiful places of your city,
+            best restaurants or places with historical values.
+        </string>
+        <string name="tv_second">Play game - in this mode you can choose one of tracks and try to play it. At the beginning
+            you get first riddle which should direct you to the first location. When you get to the right location with your
+            device you get another riddle to solve. Once you solve the last one, you win.
+        </string>
+        <string name="tv_third">Create a track - in this mode you create your own track by adding markers on map with hint leading
+            to this particular place. After adding all places you want, you fill short track summary form (title, description, location)
+            to help users find your track.
+        </string>
+
 
     <!--Track Choice Activity-->
     <string name="tv_tca_choose_track_title">Choose the track!</string>

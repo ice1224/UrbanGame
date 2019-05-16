@@ -14,18 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
-    /**
-     * currentVideoPosition potrzebne czy nie?
-     *
-     */
+
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private VideoView vvBackground;
-    MediaPlayer mediaPlayer;
-    int mCurrentVideoPosition;
+    private MediaPlayer mediaPlayer;
+    private Button bPlay;
+    private Button bCreate;
+    private Button bInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         vvBackground = findViewById(R.id.videoView);
 
+        handleButtons();
         handleVideoBackground();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -58,37 +62,68 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPrepared(final MediaPlayer mediaPlayer) {
                 MainActivity.this.mediaPlayer = mediaPlayer;
-
                 mediaPlayer.setLooping(true);
-
-                if (mCurrentVideoPosition != 0) {
-                    mediaPlayer.seekTo(mCurrentVideoPosition);
-                    mediaPlayer.start();
-                }
             }
         });
     }
 
-    public void onClick(View view) {
+    public void onClick4(View view) {
         startActivity(new Intent(this, MapsActivity.class));
     }
 
-    public void onClick2(View view) {
+    public void onClick5(View view) {
         startActivity(new Intent(this, TrackChoiceActivity.class));
     }
 
+    public void handleButtons(){
+        bPlay = findViewById(R.id.b_play);
+        bCreate = findViewById(R.id.b_create);
+        bInfo = findViewById(R.id.b_info);
 
-/*
+        bPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TrackChoiceActivity.class));
+            }
+        });
 
+        bCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Capture the current video position and pause the video.
-        mCurrentVideoPosition = mediaPlayer.getCurrentPosition();
-        vvBackground.pause();
+        bInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.popup_info_maps);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView iv_close_info = dialog.findViewById(R.id.ic_ma_close_info);
+                TextView tv_game_info_first = dialog.findViewById(R.id.tv_info_map_first);
+                TextView tv_game_info_second = dialog.findViewById(R.id.tv_info_map_second);
+                TextView tv_game_info_third = dialog.findViewById(R.id.tv_info_map_third);
+
+                tv_game_info_first.setText(R.string.tv_first);
+                tv_game_info_second.setText(R.string.tv_second);
+                tv_game_info_third.setText(R.string.tv_third);
+
+                tv_game_info_first.setTextSize(12);
+                tv_game_info_second.setTextSize(12);
+                tv_game_info_third.setTextSize(12);
+
+                iv_close_info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
-*/
+
     @Override
     protected void onResume() {
         super.onResume();
