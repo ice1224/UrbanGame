@@ -57,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean buttonClicked = false;
 
     Button bMapInfo;
+    Button bMapSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dialog.show();
             }
         });
+
+        bMapSave = findViewById(R.id.b_save_map);
+        bMapSave.setEnabled(false);
+        bMapSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAndSummarize();
+            }
+        });
+
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -198,6 +209,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     riddles.set(ind,et_new_edit_riddle.getText().toString());
                 }
                 buttonClicked = true;
+                if(markers.size()>0) {
+                    bMapSave.setEnabled(true);
+                }
                 dialog.cancel();
             }
         });
@@ -209,6 +223,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(!isMarkerNew) {
                     markers.remove(ind);
                     riddles.remove(ind);
+                    if(markers.size()==0) {
+                        bMapSave.setEnabled(false);
+                    }
                 }
                 buttonClicked = true;
                 dialog.cancel();
@@ -225,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public void saveAndSummarize(View view) {
+    public void saveAndSummarize() {
         ArrayList<String> game = new ArrayList<>();
         for (int j = 0; j < markers.size(); j++) {
             game.add(String.valueOf(markers.get(j).getPosition().latitude));
