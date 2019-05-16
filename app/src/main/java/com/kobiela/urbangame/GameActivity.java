@@ -326,7 +326,12 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onDestroy() {
         super.onDestroy();
         stopLocationUpdates();
-        Utils.setDefaults(trackId, String.valueOf(currentNumber), this);
+        if(currentNumber!=game.size()) {
+            Utils.setDefaults(trackId, String.valueOf(currentNumber), this);
+        }
+        else{
+            Utils.removeDefaults(trackId, this);
+        }
     }
 
     private void stopLocationUpdates() {
