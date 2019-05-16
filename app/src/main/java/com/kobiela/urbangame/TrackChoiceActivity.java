@@ -42,6 +42,7 @@ public class TrackChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_track_choice);
 
         etSearchTrack = findViewById(R.id.et_search_track);
+        etSearchTrack.setEnabled(false);
         etSearchTrack.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,6 +75,7 @@ public class TrackChoiceActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         readData();
     }
 
@@ -113,6 +115,6 @@ public class TrackChoiceActivity extends AppCompatActivity {
 
         mAdapter = new TrackListAdapter(TrackChoiceActivity.this, trackList, idsList);
         recyclerView.setAdapter(mAdapter);
-
+        etSearchTrack.setEnabled(true);
     }
 }

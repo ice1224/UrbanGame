@@ -56,10 +56,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     boolean buttonClicked = false;
 
+    Button bMapInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        bMapInfo = findViewById(R.id.b_map_info);
+        bMapInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(MapsActivity.this);
+                dialog.setContentView(R.layout.popup_info_maps);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView iv_close_info = dialog.findViewById(R.id.ic_ma_close_info);
+                iv_close_info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

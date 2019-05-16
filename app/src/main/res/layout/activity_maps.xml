@@ -7,11 +7,36 @@
     tools:context=".MapsActivity">
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/b_map_change"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="#99ffffff"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="changeMapType"/>
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="12dp"
+        android:onClick="changeMapType"
+        android:drawableEnd="@drawable/ic_terrain_black_24dp"
+        android:paddingEnd="7dp"
+        android:drawableTint="@color/colorTransparentPrimaryDark"
+        android:textColor="@color/colorTransparentPrimaryDark"
+        />
+
+    <Button
+        android:id="@+id/b_map_info"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="#99ffffff"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/b_map_change"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:onClick="changeMapType"
+        android:drawableEnd="@drawable/ic_info_outline_black_24dp"
+        android:paddingEnd="7dp"
+        android:drawableTint="@color/colorTransparentPrimaryDark"
+        android:textColor="@color/colorTransparentPrimaryDark"
+        />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -24,7 +49,7 @@
     </fragment>
 
     <Button
-        android:id="@+id/buttonSaveMap"
+        android:id="@+id/b_save_map"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="100dp"

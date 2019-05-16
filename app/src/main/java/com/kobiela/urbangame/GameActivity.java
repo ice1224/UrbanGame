@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         handleGame();
         updateView();
         tvRiddleText.setText(game.get(currentNumber).getRiddleText());
+        tvRiddleText.setMovementMethod(new ScrollingMovementMethod());
 
         createLocationRequest();
         locationCallback = new LocationCallback() {
@@ -176,7 +178,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             if (currentNumber >= 0) {
                 mMap.addMarker(new MarkerOptions()
                         .position(game.get(currentNumber).getCoords())
-                        .title(String.valueOf(currentNumber)+1)
+                        .title(String.valueOf(currentNumber+1))
+                        .snippet(game.get(currentNumber).getRiddleText())
                 );
             }
             ++currentNumber;

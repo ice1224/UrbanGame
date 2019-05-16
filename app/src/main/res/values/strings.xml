@@ -32,8 +32,19 @@
     <string name="b_ma_save">SAVE</string>
         <!--Popup add edit track-->
         <string name="hint_et_pae_riddle_text">Text of the riddle</string>
-        <string name="b_et_pae_popup_remove">REMOVE</string>
-        <string name="b_et_pae_popup_ok">OK</string>
+        <string name="b_pae_popup_remove">REMOVE</string>
+        <string name="b_pae_popup_ok">OK</string>
+
+        <!--Popup info-->
+        <string name="tv_pi_first">Click once to add new marker. Then pass riddle text and save the
+            marker by clicking "OK" or remove it. You can edit existing markers by clicking on them and
+            move them by long clicking and dragging them.</string>
+        <string name="tv_pi_second">Click twice to zoom in a bit. Use two fingers to rotate or zoom map.
+        After rotating map compass icon appears in the top left corner. It shows you the North and allows you
+        to undo all rotations.</string>
+        <string name="tv_pi_third">Use first button on right to center map to your current position.
+            Second button allows you to change type of the map. Last one is (as you already know) this info window. When you finish
+        creating your track click "SAVE" to move to track summary.</string>
 
     <!--Track Summary Activity-->
     <string name="et_tsa_hint_title">Title</string>
