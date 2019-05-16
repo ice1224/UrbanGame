@@ -20,6 +20,7 @@ import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,9 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean requestingLocationUpdates = false;
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
+    private int numberMapType = 0;
     private List<Riddle> game = new ArrayList<>();
+    private TextView tvRiddle;
     private TextView tvRiddleText;
     private int currentNumber = -1;
     private LatLng currentRiddleCoords;
@@ -62,12 +65,15 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static boolean isApplicationStopped = false;
     private static String CHANNEL_ID = "notification_channel_01";
+    private Button bMapChange;
+    private Button bMapInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        tvRiddleText = findViewById(R.id.tvRiddleText);
+        tvRiddle = findViewById(R.id.tv_riddle_title);
+        tvRiddleText = findViewById(R.id.tv_riddle_text);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -76,6 +82,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
         createNotificationChannel();
 
+        handleButtons();
         handleGame();
         updateView();
         tvRiddleText.setText(game.get(currentNumber).getRiddleText());
@@ -115,6 +122,37 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         startLocationUpdates();
+    }
+
+    private void handleButtons(){
+        bMapInfo = findViewById(R.id.b_map_info);
+        bMapInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(GameActivity.this);
+                dialog.setContentView(R.layout.popup_info_maps);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView iv_close_info = dialog.findViewById(R.id.ic_ma_close_info);
+                TextView tv_game_info_first = dialog.findViewById(R.id.tv_info_map_first);
+                tv_game_info_first.setText(R.string.tv_ga_pi_first);
+
+                iv_close_info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        bMapChange = findViewById(R.id.b_map_change);
+        bMapChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeMapType();
+            }
+        });
     }
 
     private boolean isPositionInRange(double currentLatitude, double currentLongitude){
@@ -189,6 +227,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                         round(game.get(currentNumber).getCoords().latitude),
                         round(game.get(currentNumber).getCoords().longitude));
                 tvRiddleText.setText(game.get(currentNumber).getRiddleText());
+                tvRiddle.setText(getString(R.string.tv_ga_riddle,currentNumber+1, game.size()));
             }
         }
         else{
@@ -281,6 +320,33 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public void changeMapType() {
+        switch (numberMapType){
+            case 0: {
+                mMap.setMapStyle(new MapStyleOptions("[]"));
+                break;
+            }
+            case 1: {
+                mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                this, R.raw.retro_theme));
+                break;
+            }
+            case 2: mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); break;
+            case 3: mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); break;
+            case 4: mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); break;
+            case 5: {
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                this, R.raw.night_theme));
+                break;
+            }
+        }
+        numberMapType++;
+        if(numberMapType>5) numberMapType = 0;
     }
 
 }

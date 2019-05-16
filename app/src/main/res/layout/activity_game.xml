@@ -12,7 +12,7 @@
 
 
         <TextView
-            android:id="@+id/tv_title_riddle"
+            android:id="@+id/tv_riddle_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -24,7 +24,7 @@
             android:textColor="@color/colorAccent"/>
 
         <TextView
-            android:id="@+id/tvRiddleText"
+            android:id="@+id/tv_riddle_text"
             android:layout_width="match_parent"
             android:minHeight="100dp"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:maxLines="5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_riddle"
+            app:layout_constraintTop_toBottomOf="@id/tv_riddle_title"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"/>
 
@@ -48,6 +48,44 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="70" />
+        android:layout_weight="70">
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/b_map_change"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@color/colorHardlyTransparentAccent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="12dp"
+            android:onClick="changeMapType2"
+            android:drawableEnd="@drawable/ic_terrain_black_24dp"
+            android:paddingEnd="7dp"
+            />
+
+        <Button
+            android:id="@+id/b_map_info"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@color/colorHardlyTransparentAccent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/b_map_change"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
+            android:drawableEnd="@drawable/ic_info_outline_black_24dp"
+            android:paddingEnd="7dp"
+            />
+        </android.support.constraint.ConstraintLayout>
+
+    </fragment>
+
+
 
 </LinearLayout>

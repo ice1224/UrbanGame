@@ -54,15 +54,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<String> riddles = new ArrayList<>();
     private int numberMapType = 0;
 
-    boolean buttonClicked = false;
+    private boolean buttonClicked = false;
 
-    Button bMapInfo;
-    Button bMapSave;
+    private Button bMapChange;
+    private Button bMapInfo;
+    private Button bMapSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+       handleButtons();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (getIntent().getBooleanExtra(SHOULD_FINISH, false)) {
+            finish();
+        }
+    }
+
+    private void handleButtons(){
+        bMapChange = findViewById(R.id.b_map_change);
+        bMapChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeMapType();
+            }
+        });
 
         bMapInfo = findViewById(R.id.b_map_info);
         bMapInfo.setOnClickListener(new View.OnClickListener() {
@@ -91,17 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (getIntent().getBooleanExtra(SHOULD_FINISH, false)) {
-            finish();
-        }
     }
+
 
 
     @SuppressLint("MissingPermission")
@@ -255,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
-    public void changeMapType(View view) {
+    public void changeMapType() {
         switch (numberMapType){
             case 0: {
                 mMap.setMapStyle(new MapStyleOptions("[]"));

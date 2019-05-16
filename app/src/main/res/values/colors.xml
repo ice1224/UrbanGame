@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorTransparentPrimaryDark">#50000000</color>
+    <color name="colorHardlyTransparentPrimaryDark">#99000000</color>
     <color name="colorTransparentAccent">#50FFFFFF</color>
     <color name="colorHardlyTransparentAccent">#99FFFFFF</color>
     <color name="colorAccentOther">#FFAA10</color>

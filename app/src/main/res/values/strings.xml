@@ -19,11 +19,16 @@
         <string name="b_ptd_play">Play</string>
 
     <!--Game Activity-->
-    <string name="tv_ga_riddle">Riddle</string>
+    <string name="tv_ga_riddle">Riddle %1$d / %2$d</string>
         <!--Popup success-->
         <string name="tv_ps_congratulations">Congratulations!</string>
         <string name="tv_ps_congratulations_text">You have found the right location</string>
         <string name="b_ps_ok">OK</string>
+
+        <!--Popup info-->
+        <string name="tv_ga_pi_first">Current riddle is displayed at the top. You have to find the place
+        described by the riddle. You can leave app by pressing the home button and it will still work in background,
+        sending you the notification if you are in the right place.</string>
 
     <!--Maps Activity-->
     <string name="tv_ma_new_marker">New Marker</string>
