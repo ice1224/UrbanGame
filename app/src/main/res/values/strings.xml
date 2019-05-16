@@ -52,9 +52,15 @@
         creating your track click "SAVE" to move to track summary.</string>
 
     <!--Track Summary Activity-->
+    <string name="tv_tsa_title">Track summary</string>
     <string name="et_tsa_hint_title">Title</string>
     <string name="et_tsa_hint_description">Description</string>
     <string name="et_tsa_hint_location">Location</string>
     <string name="b_tsa_save">SAVE</string>
+
+    <!--Notifications-->
+    <string name="notification_channel_name">NotificationsChannel</string>
+    <string name="notification_channel_description">Notify when user found right place</string>
+
 
 </resources>

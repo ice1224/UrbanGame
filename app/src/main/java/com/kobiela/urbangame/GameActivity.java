@@ -103,7 +103,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                                 Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                 "CURRENT:\n" +
-                                                String.valueOf(round(location.getLatitude())) + "   |   " + String.valueOf(round(location.getLongitude())),
+                                                String.valueOf(Utils.round(location.getLatitude(),ROUNDING_ACC)) + "   |   " + String.valueOf(Utils.round(location.getLongitude(), ROUNDING_ACC)),
                                         Toast.LENGTH_LONG).show();
 
 
@@ -150,14 +150,14 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         bMapChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeMapType();
+                Utils.changeMapType(GameActivity.this, numberMapType, mMap);
             }
         });
     }
 
     private boolean isPositionInRange(double currentLatitude, double currentLongitude){
-        double latDif = Math.abs(round(currentLatitude) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.latitude * Math.pow(10,ROUNDING_ACC));
-        double lngDif = Math.abs(round(currentLongitude) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.longitude * Math.pow(10,ROUNDING_ACC));
+        double latDif = Math.abs(Utils.round(currentLatitude, ROUNDING_ACC) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.latitude * Math.pow(10,ROUNDING_ACC));
+        double lngDif = Math.abs(Utils.round(currentLongitude, ROUNDING_ACC) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.longitude * Math.pow(10,ROUNDING_ACC));
         return (latDif <= RANGE && lngDif <= RANGE);
     }
 
@@ -224,8 +224,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println(currentNumber);
             if(currentNumber < game.size()) {
                 currentRiddleCoords = new LatLng(
-                        round(game.get(currentNumber).getCoords().latitude),
-                        round(game.get(currentNumber).getCoords().longitude));
+                        Utils.round(game.get(currentNumber).getCoords().latitude, ROUNDING_ACC),
+                        Utils.round(game.get(currentNumber).getCoords().longitude, ROUNDING_ACC));
                 tvRiddleText.setText(game.get(currentNumber).getRiddleText());
                 tvRiddle.setText(getString(R.string.tv_ga_riddle,currentNumber+1, game.size()));
             }
@@ -295,58 +295,15 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                 });
     }
 
-    private static double round(double value) {
-        if (ROUNDING_ACC < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(Double.toString(value));
-        bd = bd.setScale(ROUNDING_ACC, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
-
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        /**
-         * name i description powinny mieć getString(R.string.channel_name); itp/
-         * **/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "NotificationsChannel";
-            String description = "Channel to send notifications";
+            CharSequence name = getString(R.string.notification_channel_name);
+            String description = getString(R.string.notification_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
-
-    public void changeMapType() {
-        switch (numberMapType){
-            case 0: {
-                mMap.setMapStyle(new MapStyleOptions("[]"));
-                break;
-            }
-            case 1: {
-                mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.retro_theme));
-                break;
-            }
-            case 2: mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); break;
-            case 3: mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); break;
-            case 4: mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); break;
-            case 5: {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.night_theme));
-                break;
-            }
-        }
-        numberMapType++;
-        if(numberMapType>5) numberMapType = 0;
-    }
-
 }

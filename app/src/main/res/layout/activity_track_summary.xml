@@ -7,6 +7,17 @@
     tools:context=".TrackSummaryActivity"
     android:background="@color/colorPrimaryDark">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="24sp"
+        android:text="@string/tv_tsa_title"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="50dp"/>
+
     <EditText
         android:id="@+id/et_track_title"
         android:inputType="text"
@@ -60,14 +71,19 @@
         android:padding="10dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorAccent"/>
-
+    
     <Button
         android:id="@+id/b_save_track"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorPrimaryDark"
         android:text="@string/b_tsa_save"
-        app:layout_constraintTop_toBottomOf="@id/et_track_location"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="25dp"/>
 </android.support.constraint.ConstraintLayout>

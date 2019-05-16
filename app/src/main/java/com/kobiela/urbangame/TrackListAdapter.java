@@ -94,7 +94,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         });
     }
 
-    private void startGame(int position) {
+    private void startGame(final int position) {
         FirebaseFirestore.getInstance().collection("tracksCollection").document(idsList.get(position)).collection("riddles")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -113,6 +113,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                             }
                             Intent intent = new Intent(context, GameActivity.class);
                             intent.putStringArrayListExtra("GAME", game);
+                            intent.putExtra("TRACK_ID", idsList.get(position));
                             context.startActivity(intent);
                         } else {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();

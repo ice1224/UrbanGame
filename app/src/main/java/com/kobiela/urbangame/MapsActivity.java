@@ -82,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bMapChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeMapType();
+                Utils.changeMapType(MapsActivity.this, numberMapType, mMap);
             }
         });
 
@@ -266,32 +266,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = new Intent(this, TrackSummaryActivity.class);
         intent.putStringArrayListExtra("GAME", game);
         startActivity(intent);
-    }
-
-    public void changeMapType() {
-        switch (numberMapType){
-            case 0: {
-                mMap.setMapStyle(new MapStyleOptions("[]"));
-                break;
-            }
-            case 1: {
-                mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.retro_theme));
-                break;
-            }
-            case 2: mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); break;
-            case 3: mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); break;
-            case 4: mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); break;
-            case 5: {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                mMap.setMapStyle(
-                        MapStyleOptions.loadRawResourceStyle(
-                                this, R.raw.night_theme));
-                break;
-            }
-        }
-        numberMapType++;
-        if(numberMapType>5) numberMapType = 0;
     }
 }
