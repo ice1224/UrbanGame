@@ -99,7 +99,7 @@ public class TrackChoiceActivity extends AppCompatActivity {
                             }
                             initializeRecyclerView();
                         } else {
-                            Toast.makeText(TrackChoiceActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                            Toast.makeText(TrackChoiceActivity.this, getString(R.string.toast_something_wrong), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

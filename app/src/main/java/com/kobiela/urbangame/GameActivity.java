@@ -106,12 +106,12 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null && startCheckingPosition) {
 
-                                Toast.makeText(GameActivity.this,"TO FOUND:\n" +
+                       /*         Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                 "CURRENT:\n" +
                                                 String.valueOf(Utils.round(location.getLatitude(),ROUNDING_ACC)) + "   |   " + String.valueOf(Utils.round(location.getLongitude(), ROUNDING_ACC)),
                                         Toast.LENGTH_LONG).show();
-
+*/
 
                                     if (currentNumber < game.size() && isPositionInRange(location.getLatitude(), location.getLongitude())) {
                                         if(isApplicationStopped){
@@ -172,14 +172,27 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.popup_success);
+
+        TextView congratulationsText = dialog.findViewById(R.id.tv_congrats_text);
+        if(currentNumber == game.size()-1){
+            congratulationsText.setText(getString(R.string.tv_ga_final_congrats_text));
+            congratulationsText.setTextSize(20);
+        }
+
         Button btSuccessOk = dialog.findViewById(R.id.b_ok_dialog_success);
         btSuccessOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if(currentNumber == game.size()){
+                if(currentNumber == game.size())
                     GameActivity.this.finish();
-                }
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(currentNumber == game.size())
+                    GameActivity.this.finish();
             }
         });
         dialog.show();

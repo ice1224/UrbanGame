@@ -106,11 +106,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         bMapSave = findViewById(R.id.b_save_map);
-        bMapSave.setEnabled(false);
         bMapSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveAndSummarize();
+                if(markers.size()>0) {
+                    saveAndSummarize();
+                }
+                else{
+                    Toast.makeText(MapsActivity.this, getString(R.string.toast_empty_track), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -223,9 +227,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     riddles.set(ind,et_new_edit_riddle.getText().toString());
                 }
                 buttonClicked = true;
-                if(markers.size()>0) {
-                    bMapSave.setEnabled(true);
-                }
                 dialog.cancel();
             }
         });
@@ -237,9 +238,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(!isMarkerNew) {
                     markers.remove(ind);
                     riddles.remove(ind);
-                    if(markers.size()==0) {
-                        bMapSave.setEnabled(false);
-                    }
                 }
                 buttonClicked = true;
                 dialog.cancel();

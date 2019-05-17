@@ -40,6 +40,7 @@
         <string name="tv_ps_congratulations">Congratulations!</string>
         <string name="tv_ps_congratulations_text">You have found the right location</string>
         <string name="b_ps_ok">OK</string>
+        <string name="tv_ga_final_congrats_text">YOU WON THE GAME!!!</string>
 
         <!--Popup info-->
         <string name="tv_ga_pi_first">Current riddle is displayed at the top. You have to find the place
@@ -85,5 +86,9 @@
     <string name="notification_channel_name">NotificationsChannel</string>
     <string name="notification_channel_description">Notify when user found right place</string>
 
+    
+    <!--Warnings toasts-->
+    <string name="toast_empty_track">Track cannot be empty!</string>
+    <string name="toast_something_wrong">Something went wrong!</string>
 
 </resources>
