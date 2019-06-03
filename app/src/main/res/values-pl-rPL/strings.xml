@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UrbanGame</string>
+    <string name="title_activity_maps">Twórz</string>
+    <string name="title_activity_game">Graj</string>
+
+
+    <string name="title_activity_track_choice">TrackChoiceActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="b_play">Graj</string>
+    <string name="b_add_track">Twórz</string>
+    <string name="b_info">Info</string>
+    <string name="tv_first">To jest aplikacja Urban Game. Gra miejska to gra, która do rozgrywki wykorzystuje teren, miasto.
+        Ta aplikacja pozwala Ci tworzyć i grać w gry miejskie. Każda gra (trasa) składa się z pewnej liczby zagadek w ustalonej kolejności.
+        Każda zagadka to podpowiedź dotycząca miejsca, które należy odnaleźć. Trasa może dotyczyć np. najpiękniejszych miejsc w Twoim mieście,
+        najlepszych restauracji czy miejsc o wartości historycznej.</string>
+    <string name="tv_second">Graj - w tym trybie możesz wybrać i zagrać w jedną z istniejących rozgrywek. Na początku otrzymujesz pierwszą
+        zagadkę, mającą nakierować Cię do pierwszej lokacji. Kiedy dotrzesz do tej lokacji ze swoim urządzeniem, otrzymasz kolejną zagadkę
+        do rozwiązania. Jeśli uda Ci się rozwiązać wszystkie - wygrywasz.
+        </string>
+    <string name="tv_third">Twórz - w tym trybie tworzysz własną trasę, dodając na mapie znaczniki ze wskazówkami dotyczącymi poszczególnych
+        miejsc. Po dodaniu wszystkich znaczników, wypełniasz krótkie podsumowanie trasy (tytuł, opis, lokalizacja), ułatwiające innym
+        użytkownikom wyszukanie Twojej trasy.
+        </string>
+    <string name="tv_tca_choose_track_title">Wybierz trasę!</string>
+    <string name="hint_tca_search">Szukaj</string>
+    <string name="b_ptd_cancel">Anuluj</string>
+    <string name="b_ptd_play">Graj</string>
+    <string name="tv_ga_riddle">Zagadka %1$d / %2$d</string>
+    <string name="tv_ps_congratulations">Gratulacje!</string>
+    <string name="tv_ps_congratulations_text">Znalazłeś właściwą lokację</string>
+    <string name="b_ps_ok">OK</string>
+    <string name="tv_ga_final_congrats_text">ZWYCIĘŻYŁEŚ</string>
+    <string name="tv_ga_pi_first">Aktualna zagadka wyświetlona jest u góry. Musisz odnaleźć miejsce(lokację) opisaną przez zagadkę. Możesz wyjść z aplikacji poprzez przycisk Home, a będzie ona działała w tle, wysyłając notyfikacje.</string>
+    <string name="tv_ga_pc_continue_game">Czy chcesz kontynuować ostatnią rozgrywkę?</string>
+    <string name="b_ga_pc_start_new">Nowa Gra</string>
+    <string name="b_ga_pc_continue">Kontynuuj</string>
+    <string name="tv_ma_new_marker">Nowy Znacznik</string>
+    <string name="tv_ma_edit_marker">Edytuj Znacznik</string>
+    <string name="tv_ma_which_marker">%1$d / %2$d</string>
+    <string name="b_ma_save">ZAPISZ</string>
+    <string name="hint_et_pae_riddle_text">Treść zagadki</string>
+    <string name="b_pae_popup_remove">USUŃ</string>
+    <string name="b_pae_popup_ok">OK</string>
+    <string name="tv_pi_first">Dotknij mapy, aby dodać nowy znacznik. Następnie podaj treść zagadki i zapisz (OK) lub USUŃ znacznik. Możesz edytować istniejące znaczniki dotykając ich lub przemieszczać przytrzymując i przeciągając.</string>
+    <string name="tv_pi_second">Dotknij dwukrotnie aby delikatnie przybliżyć. Użyj dwóch palców aby przybliżyć lub obrócić mapę. Po obrocie w lewym górnym rogu pojawia się ikona kompasu pozwalająca wrócić do stanu pierwotnego.</string>
+    <string name="tv_pi_third">Pierwszy przycisk z prawej służy do odnalezienia aktualnej pozycji gracza. Drugi pozwala zmienić typ mapy. Trzeci (jak już wiesz) otwiera to okno informacyjne. Kiedy dodasz wszystkie znaczniki wciśnij ZAPISZ, aby przejść do podsumowania trasy.</string>
+    <string name="tv_tsa_title">Podsumowanie trasy</string>
+    <string name="et_tsa_hint_title">Tytuł</string>
+    <string name="et_tsa_hint_description">Opis</string>
+    <string name="et_tsa_hint_location">Lokalizacja</string>
+    <string name="b_tsa_save">ZAPISZ</string>
+    <string name="notification_title">Gratulacje!</string>
+    <string name="notification_text">Znalazłeś właściwą lokację</string>
+    <string name="notification_channel_name">NotificationsChannel</string>
+    <string name="notification_channel_description">Notify when user found right place</string>
+    <string name="toast_empty_track">Trasa nie może być pusta!</string>
+    <string name="toast_something_wrong">Coś poszło nie tak!</string>
+</resources>

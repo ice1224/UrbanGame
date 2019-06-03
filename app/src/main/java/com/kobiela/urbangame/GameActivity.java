@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -53,7 +54,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
-    private boolean requestingLocationUpdates = false;
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
     private int numberMapType = 0;
@@ -80,7 +80,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_game);
         tvRiddle = findViewById(R.id.tv_riddle_title);
         tvRiddleText = findViewById(R.id.tv_riddle_text);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -103,15 +102,16 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                         .addOnSuccessListener(GameActivity.this, new OnSuccessListener<Location>() {
                             @Override
                             public void onSuccess(Location location) {
-                                // Got last known location. In some rare situations this can be null.
                                 if (location != null && startCheckingPosition) {
+/*
 
-                       /*         Toast.makeText(GameActivity.this,"TO FOUND:\n" +
+                                Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                 "CURRENT:\n" +
                                                 String.valueOf(Utils.round(location.getLatitude(),ROUNDING_ACC)) + "   |   " + String.valueOf(Utils.round(location.getLongitude(), ROUNDING_ACC)),
                                         Toast.LENGTH_LONG).show();
 */
+
 
                                     if (currentNumber < game.size() && isPositionInRange(location.getLatitude(), location.getLongitude())) {
                                         if(isApplicationStopped){
@@ -237,8 +237,10 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void sendNotification(){
         Intent intent = getIntent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(GameActivity.this, 0, intent, 0);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(intent);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(GameActivity.this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_star_black_24dp)

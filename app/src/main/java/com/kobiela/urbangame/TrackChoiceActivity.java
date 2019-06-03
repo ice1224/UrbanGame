@@ -88,7 +88,6 @@ public class TrackChoiceActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                               // Toast.makeText(TrackChoiceActivity.this,document.getId() + " => " + document.getData(), Toast.LENGTH_LONG).show();
                                 String title = document.get("TITLE").toString();
                                 String description = document.get("DESCRIPTION").toString();
                                 String location = document.get("LOCATION").toString();

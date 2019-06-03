@@ -51,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
+                if (grantResults.length > 0) {
+                    if(grantResults[0] == -1) {
+                        this.finish();
+                    }
+                }
+                break;
+        }
+    }
+
     private void handleVideoBackground() {
         final Uri uri1 = Uri.parse("android.resource://" + getPackageName() + "/"
                 + R.raw.background_merged);
@@ -65,14 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.setLooping(true);
             }
         });
-    }
-
-    public void onClick4(View view) {
-        startActivity(new Intent(this, MapsActivity.class));
-    }
-
-    public void onClick5(View view) {
-        startActivity(new Intent(this, TrackChoiceActivity.class));
     }
 
     public void handleButtons(){

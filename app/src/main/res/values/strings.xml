@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">UrbanGame</string>
-    <string name="title_activity_maps">Create</string>
     <string name="title_activity_game">Play</string>
 
     <string name="title_activity_track_choice">TrackChoiceActivity</string>
@@ -90,5 +89,6 @@
     <!--Warnings toasts-->
     <string name="toast_empty_track">Track cannot be empty!</string>
     <string name="toast_something_wrong">Something went wrong!</string>
+    <string name="title_activity_maps">Create</string>
 
 </resources>

@@ -23,9 +23,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".TrackChoiceActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".TrackSummaryActivity"
+            android:parentActivityName=".MapsActivity"
             android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -41,11 +43,13 @@
 
         <activity
             android:name=".GameActivity"
+            android:parentActivityName=".TrackChoiceActivity"
             android:label="@string/title_activity_game"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
