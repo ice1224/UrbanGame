@@ -53,6 +53,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         final String title = trackList.get(position).getTitle();
         final String description = trackList.get(position).getDescription();
         final String location = trackList.get(position).getLocation();
+        final String author = trackList.get(position).getAuthor();
 
         holder.trackLocation.setText(location);
         holder.trackTitle.setText(title);
@@ -74,12 +75,12 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialogWindow(position, title, description, location);
+                openDialogWindow(position, title, description, location, author);
             }
         });
     }
 
-    private void openDialogWindow(final int position, String title, String description, String location){
+    private void openDialogWindow(final int position, String title, String description, String location, String author){
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.popup_track_details);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -88,12 +89,14 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         TextView tvTrackTitle = dialog.findViewById(R.id.tv_track_details_title);
         TextView tvTrackDescription = dialog.findViewById(R.id.tv_track_details_description);
         TextView tvTrackLocation = dialog.findViewById(R.id.tv_track_details_location);
+        TextView tvTrackAuthor = dialog.findViewById(R.id.tv_track_details_author);
         Button bPlayGame = dialog.findViewById(R.id.b_play_game);
         Button bCancelGame = dialog.findViewById(R.id.b_cancel_game);
 
         tvTrackTitle.setText(title);
         tvTrackDescription.setText(description);
         tvTrackLocation.setText(location);
+        tvTrackAuthor.setText(author);
 
         bPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,7 +24,7 @@ public class TrackSummaryActivity extends AppCompatActivity {
 
     private List<Riddle> game = new ArrayList<>();
     private Button bSaveTrack;
-    private EditText etTrackTitle, etTrackDescription, etTrackLocation;
+    private EditText etTrackTitle, etTrackDescription, etTrackLocation, etTrackAuthor;
     private CollectionReference mColRef = FirebaseFirestore.getInstance().collection("tracksCollection");
 
     @Override
@@ -40,6 +40,7 @@ public class TrackSummaryActivity extends AppCompatActivity {
         etTrackTitle = findViewById(R.id.et_track_title);
         etTrackDescription = findViewById(R.id.et_track_description);
         etTrackLocation = findViewById(R.id.et_track_location);
+        etTrackAuthor = findViewById(R.id.et_track_author);
 
         bSaveTrack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +81,12 @@ public class TrackSummaryActivity extends AppCompatActivity {
         String title = etTrackTitle.getText().toString();
         String description = etTrackDescription.getText().toString();
         String location = etTrackLocation.getText().toString();
+        String author = etTrackAuthor.getText().toString();
         Map<String,Object> dataToSave = new HashMap<>();
         dataToSave.put("TITLE", title);
         dataToSave.put("DESCRIPTION", description);
         dataToSave.put("LOCATION", location);
+        dataToSave.put("AUTHOR", author);
         mColRef.add(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

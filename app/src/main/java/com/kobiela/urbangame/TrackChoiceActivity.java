@@ -91,8 +91,9 @@ public class TrackChoiceActivity extends AppCompatActivity {
                                 String title = document.get("TITLE").toString();
                                 String description = document.get("DESCRIPTION").toString();
                                 String location = document.get("LOCATION").toString();
-                                trackListFull.add(new Track(title,description,location));
-                                trackList.add(new Track(title,description,location));
+                                String author = document.get("AUTHOR").toString();
+                                trackListFull.add(new Track(title,description,location,author));
+                                trackList.add(new Track(title,description,location,author));
                                 idsListFull.add(document.getId());
                                 idsList.add(document.getId());
                             }

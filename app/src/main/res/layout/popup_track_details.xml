@@ -70,12 +70,24 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_track_details_description"/>
 
                 <TextView
+                    android:id="@+id/tv_track_details_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    app:layout_goneMarginTop="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_location"/>
+
+                <TextView
                     android:id="@+id/tv_fake_center"
                     android:layout_width="2dp"
                     android:layout_height="0dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_location"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
                     android:layout_marginTop="25dp"/>
 
                 <Button
@@ -88,7 +100,7 @@
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/tv_fake_center"
-                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_location"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
                     android:layout_marginTop="25dp"/>
 
                 <Button
@@ -101,7 +113,7 @@
                     android:textSize="16sp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/tv_fake_center"
-                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_location"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
                     android:layout_marginTop="25dp"/>
 
 
