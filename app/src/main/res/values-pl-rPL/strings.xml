@@ -50,7 +50,8 @@
     <string name="tv_tsa_title">Podsumowanie trasy</string>
     <string name="et_tsa_hint_title">Tytuł</string>
     <string name="et_tsa_hint_description">Opis</string>
-    <string name="et_tsa_hint_location">Lokalizacja</string>
+    <string name="et_tsa_hint_location">Lokacja</string>
+    <string name="et_tsa_hint_author">Autor</string>
     <string name="b_tsa_save">ZAPISZ</string>
     <string name="notification_title">Gratulacje!</string>
     <string name="notification_text">Znalazłeś właściwą lokację</string>
