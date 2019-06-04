@@ -31,6 +31,7 @@
     <string name="hint_tca_search">Search</string>
         <!--Popup track details-->
         <string name="b_ptd_cancel">Cancel</string>
+        <string name="b_ptd_rate">Rate</string>
         <string name="b_ptd_play">Play</string>
 
     <!--Game Activity-->

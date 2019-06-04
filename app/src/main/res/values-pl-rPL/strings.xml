@@ -27,6 +27,7 @@
     <string name="tv_tca_choose_track_title">Wybierz trasę!</string>
     <string name="hint_tca_search">Szukaj</string>
     <string name="b_ptd_cancel">Anuluj</string>
+    <string name="b_ptd_rate">Oceń</string>
     <string name="b_ptd_play">Graj</string>
     <string name="tv_ga_riddle">Zagadka %1$d / %2$d</string>
     <string name="tv_ps_congratulations">Gratulacje!</string>

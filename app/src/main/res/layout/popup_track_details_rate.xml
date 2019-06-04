@@ -81,10 +81,15 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_track_details_location"/>
 
-                <TextView
-                    android:id="@+id/tv_fake_center"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
+                <Button
+                    android:id="@+id/b_rate_track"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintWidth_percent="0.33"
+                    android:text="@string/b_ptd_rate"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorAccent"
+                    android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
@@ -99,9 +104,10 @@
                     android:background="@color/colorAccent"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/tv_fake_center"
+                    app:layout_constraintRight_toLeftOf="@id/b_rate_track"
                     app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
-                    android:layout_marginTop="25dp"/>
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="2dp"/>
 
                 <Button
                     android:id="@+id/b_play_game"
@@ -112,9 +118,10 @@
                     android:background="@color/colorAccent"
                     android:textSize="16sp"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/tv_fake_center"
+                    app:layout_constraintLeft_toRightOf="@id/b_rate_track"
                     app:layout_constraintTop_toBottomOf="@id/tv_track_details_author"
-                    android:layout_marginTop="25dp"/>
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="2dp"/>
 
 
             </android.support.constraint.ConstraintLayout>

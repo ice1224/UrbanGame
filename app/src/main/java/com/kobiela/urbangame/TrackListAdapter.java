@@ -67,6 +67,9 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
 
         if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
             holder.parentLayout.setBackgroundResource(R.color.colorAccentOther);
+            if(Utils.searchDefaults(idsList.get(position), context)){
+                holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            }
         }
         else{
             holder.parentLayout.setBackgroundResource(R.color.colorPrimary);
@@ -80,9 +83,28 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         });
     }
 
-    private void openDialogWindow(final int position, String title, String description, String location, String author){
+    private void openDialogWindow(final int position, final String title, String description, String location, String author){
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.popup_track_details);
+
+        if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
+            dialog.setContentView(R.layout.popup_track_details_rate);
+            Button bRateTrack = dialog.findViewById(R.id.b_rate_track);
+            bRateTrack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    openRatingDialogWindow(position, title);
+                }
+
+                private void openRatingDialogWindow(int position, String title) {
+                    Toast.makeText(context, title, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            dialog.setContentView(R.layout.popup_track_details);
+        }
+
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
