@@ -103,14 +103,14 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onSuccess(Location location) {
                                 if (location != null && startCheckingPosition) {
-/*
+
 
                                 Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                 "CURRENT:\n" +
                                                 String.valueOf(Utils.round(location.getLatitude(),ROUNDING_ACC)) + "   |   " + String.valueOf(Utils.round(location.getLongitude(), ROUNDING_ACC)),
                                         Toast.LENGTH_LONG).show();
-*/
+
 
 
                                     if (currentNumber < game.size() && isPositionInRange(location.getLatitude(), location.getLongitude())) {
@@ -342,11 +342,14 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         super.onDestroy();
         stopLocationUpdates();
         if(currentNumber!=game.size()) {
+            System.out.println("-----------------" + trackId + "-------------------");
             Utils.setDefaults(trackId, String.valueOf(currentNumber), this);
         }
         else{
             Utils.removeDefaults(trackId, this);
+            Utils.setDefaults(trackId + "_FINISHED", "TRUE", this);
         }
+        startActivity(new Intent(this, TrackChoiceActivity.class));
     }
 
     private void stopLocationUpdates() {

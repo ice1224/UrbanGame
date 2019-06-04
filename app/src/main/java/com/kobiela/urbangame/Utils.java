@@ -43,6 +43,11 @@ public class Utils {
         editor.apply();
     }
 
+    public static boolean searchDefaults(String key, Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.contains(key);
+    }
+
     public static String getDefaults(String key, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString(key, null);

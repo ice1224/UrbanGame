@@ -1,5 +1,6 @@
 package com.kobiela.urbangame;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +54,22 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         final String description = trackList.get(position).getDescription();
         final String location = trackList.get(position).getLocation();
 
-        holder.trackTitle.setText(title);
         holder.trackLocation.setText(location);
+        holder.trackTitle.setText(title);
+
+        if(Utils.searchDefaults(idsList.get(position), context)){
+            holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorAccentOther));
+        }
+        else{
+            holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+        }
+
+        if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
+            holder.parentLayout.setBackgroundResource(R.color.colorAccentOther);
+        }
+        else{
+            holder.parentLayout.setBackgroundResource(R.color.colorPrimary);
+        }
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +132,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                             intent.putStringArrayListExtra("GAME", game);
                             intent.putExtra("TRACK_ID", id);
                             context.startActivity(intent);
+                            ((Activity)context).finish();
                         } else {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();
                         }
