@@ -1,10 +1,19 @@
 package com.kobiela.urbangame;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -76,6 +85,61 @@ public class Utils {
                 break;
             }
         }
+    }
+
+    public static void openRatingDialogWindow(final String id, String title, final Context context, final boolean closeContextActivity) {
+        final Dialog rateDialog = new Dialog(context);
+        rateDialog.setContentView(R.layout.popup_track_rate);
+
+        TextView tvRateTrackTitle = rateDialog.findViewById(R.id.tv_rate_track_title);
+        Button bCancelRating = rateDialog.findViewById(R.id.b_cancel_rating);
+        Button bSaveRating = rateDialog.findViewById(R.id.b_save_rating);
+        final RatingBar ratbQuality = rateDialog.findViewById(R.id.ratb_quality);
+        final RatingBar ratbDifficulty = rateDialog.findViewById(R.id.ratb_difficulty);
+        final RatingBar ratbLength = rateDialog.findViewById(R.id.ratb_length);
+
+        rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        rateDialog.show();
+
+        if(Utils.searchDefaults(id + "_QUALITY", context)){
+            ratbQuality.setRating(Float.valueOf(Utils.getDefaults(id + "_QUALITY", context)));
+        }
+        if(Utils.searchDefaults(id + "_DIFFICULTY", context)){
+            ratbDifficulty.setRating(Float.valueOf(Utils.getDefaults(id + "_DIFFICULTY", context)));
+        }
+        if(Utils.searchDefaults(id + "_LENGTH", context)){
+            ratbLength.setRating(Float.valueOf(Utils.getDefaults(id + "_LENGTH", context)));
+        }
+
+
+        tvRateTrackTitle.setText(title);
+        bCancelRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rateDialog.dismiss();
+            }
+        });
+
+        bSaveRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.setDefaults(id + "_QUALITY", String.valueOf(ratbQuality.getRating()), context);
+                Utils.setDefaults(id + "_DIFFICULTY", String.valueOf(ratbDifficulty.getRating()), context);
+                Utils.setDefaults(id + "_LENGTH", String.valueOf(ratbLength.getRating()), context);
+                rateDialog.dismiss();
+            }
+        });
+
+        rateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(closeContextActivity) {
+                    ((Activity) context).finish();
+                }
+            }
+        });
+
+
     }
 
 }

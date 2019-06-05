@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,12 +94,10 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    openRatingDialogWindow(position, title);
+                    Utils.openRatingDialogWindow(idsList.get(position), title, context, false);
                 }
 
-                private void openRatingDialogWindow(int position, String title) {
-                    Toast.makeText(context, title, Toast.LENGTH_SHORT).show();
-                }
+
             });
         }
         else{

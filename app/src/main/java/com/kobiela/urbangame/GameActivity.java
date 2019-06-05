@@ -184,8 +184,10 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if(currentNumber == game.size())
-                    GameActivity.this.finish();
+                if(currentNumber == game.size()){
+                    Utils.openRatingDialogWindow(trackId, "Oceń trasę!", GameActivity.this, true);
+                    //GameActivity.this.finish();
+                }
             }
         });
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

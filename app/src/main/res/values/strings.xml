@@ -34,6 +34,11 @@
         <string name="b_ptd_rate">Rate</string>
         <string name="b_ptd_play">Play</string>
 
+    <!--Popup rate track-->
+    <string name="prt_quality">Quality</string>
+    <string name="prt_difficulty">Difficulty</string>
+    <string name="prt_Length">Length</string>
+
     <!--Game Activity-->
     <string name="tv_ga_riddle">Riddle %1$d / %2$d</string>
         <!--Popup success-->
