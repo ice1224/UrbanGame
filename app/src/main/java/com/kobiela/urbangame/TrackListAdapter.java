@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,9 +56,11 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         final String description = trackList.get(position).getDescription();
         final String location = trackList.get(position).getLocation();
         final String author = trackList.get(position).getAuthor();
+        final float qualityAverage = trackList.get(position).getQualityAverage();
 
         holder.trackLocation.setText(location);
         holder.trackTitle.setText(title);
+        holder.qualityAverage.setText(String.valueOf(qualityAverage));
 
         if(Utils.searchDefaults(idsList.get(position), context)){
             holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorAccentOther));
@@ -68,6 +71,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
 
         if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
             holder.parentLayout.setBackgroundResource(R.color.colorAccentOther);
+            holder.ratingStarIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent));
             if(Utils.searchDefaults(idsList.get(position), context)){
                 holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             }
@@ -111,11 +115,21 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         TextView tvTrackDescription = dialog.findViewById(R.id.tv_track_details_description);
         TextView tvTrackLocation = dialog.findViewById(R.id.tv_track_details_location);
         TextView tvTrackAuthor = dialog.findViewById(R.id.tv_track_details_author);
+        TextView tvQualityRateNumber = dialog.findViewById(R.id.tv_rating_star_icon_quality_number);
+        TextView tvDifficultyRateNumber = dialog.findViewById(R.id.tv_rating_star_icon_difficulty_number);
+        TextView tvLengthRateNumber = dialog.findViewById(R.id.tv_rating_star_icon_length_number);
         Button bPlayGame = dialog.findViewById(R.id.b_play_game);
         Button bCancelGame = dialog.findViewById(R.id.b_cancel_game);
 
+
+
         tvTrackTitle.setText(title);
         tvTrackDescription.setText(description);
+
+        tvQualityRateNumber.setText(String.valueOf(trackList.get(position).getQualityAverage()));
+        tvDifficultyRateNumber.setText(String.valueOf(trackList.get(position).getDifficultyAverage()));
+        tvLengthRateNumber.setText(String.valueOf(trackList.get(position).getLengthAverage()));
+
         tvTrackLocation.setText(location);
         tvTrackAuthor.setText(author);
 
@@ -172,12 +186,15 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
 
     public static class TrackListViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        TextView trackTitle, trackLocation;
+        TextView trackTitle, trackLocation, qualityAverage;
+        ImageView ratingStarIcon;
         ConstraintLayout parentLayout;
         public TrackListViewHolder(View itemView) {
             super(itemView);
             trackTitle = itemView.findViewById(R.id.tv_item_track_title);
             trackLocation = itemView.findViewById(R.id.tv_item_track_location);
+            qualityAverage = itemView.findViewById(R.id.tv_quality_rating);
+            ratingStarIcon = itemView.findViewById(R.id.iv_rating_star_icon);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }

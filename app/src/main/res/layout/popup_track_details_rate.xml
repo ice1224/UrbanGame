@@ -58,6 +58,120 @@
                     android:scrollbars="vertical"
                     />
 
+
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_quality"
+                    android:text="Quality"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_description"
+                    android:layout_marginTop="15dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_rating_star_icon_quality"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_star_black_24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rating_star_icon_quality"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_quality_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.76"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintLeft_toLeftOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintRight_toRightOf="@id/iv_rating_star_icon_quality"/>
+
+
+
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_difficulty"
+                    android:text="Difficulty"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_description"
+                    android:layout_marginTop="15dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_rating_star_icon_difficulty"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_star_black_24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rating_star_icon_difficulty"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_difficulty_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.76"
+                    android:textSize="11sp"
+                    app:layout_constraintTop_toTopOf="@id/iv_rating_star_icon_difficulty"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_rating_star_icon_difficulty"
+                    app:layout_constraintLeft_toLeftOf="@id/iv_rating_star_icon_difficulty"
+                    app:layout_constraintRight_toRightOf="@id/iv_rating_star_icon_difficulty"/>
+
+
+
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_length"
+                    android:text="Length"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintLeft_toRightOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_description"
+                    android:layout_marginTop="15dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_rating_star_icon_length"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_star_black_24dp"
+                    app:layout_constraintLeft_toRightOf="@id/iv_rating_star_icon_quality"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rating_star_icon_length"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_rating_star_icon_length_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.76"
+                    android:textSize="11sp"
+                    app:layout_constraintTop_toTopOf="@id/iv_rating_star_icon_length"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_rating_star_icon_length"
+                    app:layout_constraintLeft_toLeftOf="@id/iv_rating_star_icon_length"
+                    app:layout_constraintRight_toRightOf="@id/iv_rating_star_icon_length"/>
+
+
+
+
+
                 <TextView
                     android:id="@+id/tv_track_details_location"
                     android:layout_width="wrap_content"
@@ -67,7 +181,7 @@
                     android:textSize="28sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_track_details_description"/>
+                    app:layout_constraintTop_toBottomOf="@id/iv_rating_star_icon_quality"/>
 
                 <TextView
                     android:id="@+id/tv_track_details_author"

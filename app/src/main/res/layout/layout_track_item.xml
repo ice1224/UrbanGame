@@ -7,7 +7,8 @@
 
     <TextView
         android:id="@+id/tv_item_track_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:text="TITLE"
@@ -18,13 +19,36 @@
 
     <TextView
         android:id="@+id/tv_item_track_location"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
         android:layout_height="wrap_content"
         android:text="location"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_item_track_title"
         android:textColor="@color/colorAccent"
         android:layout_margin="5dp"/>
+
+    <ImageView
+        android:id="@+id/iv_rating_star_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_star_black_24dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_quality_rating"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iv_rating_star_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginRight="5dp"
+        />
 
     <View
         android:layout_height="2dp"
