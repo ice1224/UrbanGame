@@ -260,20 +260,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void handleGame() {
         Intent intent = getIntent();
-        ArrayList<String> gameAL = intent.getStringArrayListExtra("GAME");
-
-
-        for (int i = 0; i <= gameAL.size()-3; i=i+3) {
-            System.out.print(gameAL.get(i) + "   |   ");
-            System.out.print(gameAL.get(i+1) + "   |   ");
-            System.out.print(gameAL.get(i+2));
-            System.out.println();
-            game.add(new Riddle(
-                    gameAL.get(i),
-                    gameAL.get(i+1),
-                    gameAL.get(i+2)));
-        }
-
+        Track track = (Track)intent.getSerializableExtra("TRACK");
+        game = track.getRiddles();
     }
 
     public void checkIfSaved(){
@@ -293,7 +281,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         if(currentNumber < game.size()) {
             if (currentNumber >= 0) {
                 mMap.addMarker(new MarkerOptions()
-                        .position(game.get(currentNumber).getCoords())
+                        .position(new LatLng(game.get(currentNumber).getLat(),game.get(currentNumber).getLng()))
                         .title(String.valueOf(currentNumber+1))
                         .snippet(game.get(currentNumber).getRiddleText())
                 );
@@ -302,8 +290,8 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println(currentNumber);
             if(currentNumber < game.size()) {
                 currentRiddleCoords = new LatLng(
-                        Utils.round(game.get(currentNumber).getCoords().latitude, ROUNDING_ACC),
-                        Utils.round(game.get(currentNumber).getCoords().longitude, ROUNDING_ACC));
+                        Utils.round(game.get(currentNumber).getLat(), ROUNDING_ACC),
+                        Utils.round(game.get(currentNumber).getLng(), ROUNDING_ACC));
                 tvRiddleText.setText(game.get(currentNumber).getRiddleText());
                 tvRiddle.setText(getString(R.string.tv_ga_riddle,currentNumber+1, game.size()));
             }
@@ -351,7 +339,6 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             Utils.removeDefaults(trackId, this);
             Utils.setDefaults(trackId + "_FINISHED", "TRUE", this);
         }
-        startActivity(new Intent(this, TrackChoiceActivity.class));
     }
 
     private void stopLocationUpdates() {

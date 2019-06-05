@@ -96,7 +96,7 @@ public class TrackSummaryActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         for (int i = 0; i < game.size(); i++) {
-                            LatLng coords = game.get(i).getCoords();
+                            LatLng coords = new LatLng(game.get(i).getLat(),game.get(i).getLng());
                             String riddle = game.get(i).getRiddleText();
 
                             Map<String,Object> riddlesToSave = new HashMap<>();

@@ -2,27 +2,37 @@ package com.kobiela.urbangame;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Riddle {
-    private LatLng coords;
+import java.io.Serializable;
+
+public class Riddle implements Serializable {
+    private double lat;
+    private double lng;
     private String riddleText;
 
     public Riddle(LatLng coords, String riddleText) {
-        this.coords = coords;
+        lat = coords.latitude;
+        lat = coords.longitude;
         this.riddleText = riddleText;
     }
 
     public Riddle(double lat, double lng, String riddleText){
-        coords = new LatLng(lat,lng);
+        this.lat = lat;
+        this.lng = lng;
         this.riddleText = riddleText;
     }
 
     public Riddle(String lat, String lng, String riddleText){
-        coords = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
+        this.lat = Double.valueOf(lat);
+        this.lng = Double.valueOf(lng);
         this.riddleText = riddleText;
     }
 
-    public LatLng getCoords() {
-        return coords;
+    public double getLat(){
+        return lat;
+    }
+
+    public double getLng(){
+        return lng;
     }
 
     public String getRiddleText() {

@@ -1,8 +1,9 @@
 package com.kobiela.urbangame;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Track {
+public class Track implements Serializable {
     private String title;
     private String description;
     private String location;

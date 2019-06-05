@@ -136,7 +136,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         bPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame(idsList.get(position));
+                startGame(idsList.get(position),position);
                 dialog.cancel();
             }
         });
@@ -149,26 +149,26 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         });
     }
 
-    private void startGame(final String id) {
+    private void startGame(final String id, final int position) {
         FirebaseFirestore.getInstance().collection("tracksCollection").document(id).collection("riddles")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<String> game = new ArrayList<>();
+                            ArrayList<Riddle> riddles = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                     String lat = ((HashMap)document.get("COORDS")).get("latitude").toString();
                                     String lng = ((HashMap)document.get("COORDS")).get("longitude").toString();
                                     String riddle = document.get("RIDDLE").toString();
 
-                                    game.add(String.valueOf(lat));
-                                    game.add(String.valueOf(lng));
-                                    game.add(riddle);
+                                    riddles.add(new Riddle(lat,lng,riddle));
                             }
                             Intent intent = new Intent(context, GameActivity.class);
-                            intent.putStringArrayListExtra("GAME", game);
+                            trackList.get(position).setRiddles(riddles);
+                           // intent.putStringArrayListExtra("GAME", game);
                             intent.putExtra("TRACK_ID", id);
+                            intent.putExtra("TRACK", trackList.get(position));
                             context.startActivity(intent);
                             ((Activity)context).finish();
                         } else {
