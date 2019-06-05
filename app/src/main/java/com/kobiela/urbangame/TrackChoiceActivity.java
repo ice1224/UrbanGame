@@ -92,8 +92,12 @@ public class TrackChoiceActivity extends AppCompatActivity {
                                 String description = document.get("DESCRIPTION").toString();
                                 String location = document.get("LOCATION").toString();
                                 String author = document.get("AUTHOR").toString();
-                                trackListFull.add(new Track(title,description,location,author));
-                                trackList.add(new Track(title,description,location,author));
+                                int qualitySum = Integer.valueOf(document.get("QUALITY_SUM").toString());
+                                int difficultySum = Integer.valueOf(document.get("DIFFICULTY_SUM").toString());
+                                int lengthSum = Integer.valueOf(document.get("LENGTH_SUM").toString());
+                                int numberOfVotes = Integer.valueOf(document.get("NUMBER_OF_VOTES").toString());
+                                trackListFull.add(new Track(title,description,location,author,qualitySum,difficultySum,lengthSum,numberOfVotes));
+                                trackList.add(new Track(title,description,location,author,qualitySum,difficultySum,lengthSum,numberOfVotes));
                                 idsListFull.add(document.getId());
                                 idsList.add(document.getId());
                             }

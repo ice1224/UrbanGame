@@ -87,6 +87,10 @@ public class TrackSummaryActivity extends AppCompatActivity {
         dataToSave.put("DESCRIPTION", description);
         dataToSave.put("LOCATION", location);
         dataToSave.put("AUTHOR", author);
+        dataToSave.put("QUALITY_SUM", 0);
+        dataToSave.put("DIFFICULTY_SUM", 0);
+        dataToSave.put("LENGTH_SUM", 0);
+        dataToSave.put("NUMBER_OF_VOTES", 0);
         mColRef.add(dataToSave)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

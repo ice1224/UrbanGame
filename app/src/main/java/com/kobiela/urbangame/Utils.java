@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -101,16 +105,31 @@ public class Utils {
         rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         rateDialog.show();
 
+        int savedQuality = 0;
+        int savedDifficulty = 0;
+        int savedLength = 0;
+        boolean alreadyRated = false;
+
         if(Utils.searchDefaults(id + "_QUALITY", context)){
+            savedQuality = Integer.valueOf(Utils.getDefaults(id + "_QUALITY", context));
             ratbQuality.setRating(Float.valueOf(Utils.getDefaults(id + "_QUALITY", context)));
+            alreadyRated = true;
         }
         if(Utils.searchDefaults(id + "_DIFFICULTY", context)){
+            savedDifficulty = Integer.valueOf(Utils.getDefaults(id + "_DIFFICULTY", context));
             ratbDifficulty.setRating(Float.valueOf(Utils.getDefaults(id + "_DIFFICULTY", context)));
+            alreadyRated = true;
         }
         if(Utils.searchDefaults(id + "_LENGTH", context)){
+            savedLength = Integer.valueOf(Utils.getDefaults(id + "_LENGTH", context));
             ratbLength.setRating(Float.valueOf(Utils.getDefaults(id + "_LENGTH", context)));
+            alreadyRated = true;
         }
 
+        final int savedQualityFinal = savedQuality;
+        final int savedDifficultyFinal = savedDifficulty;
+        final int savedLengthFinal = savedLength;
+        final boolean alreadyRatedFinal = alreadyRated;
 
         tvRateTrackTitle.setText(title);
         bCancelRating.setOnClickListener(new View.OnClickListener() {
@@ -123,9 +142,42 @@ public class Utils {
         bSaveRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.setDefaults(id + "_QUALITY", String.valueOf(ratbQuality.getRating()), context);
-                Utils.setDefaults(id + "_DIFFICULTY", String.valueOf(ratbDifficulty.getRating()), context);
-                Utils.setDefaults(id + "_LENGTH", String.valueOf(ratbLength.getRating()), context);
+                int qualityRate = Math.round(ratbQuality.getRating());
+                int difficultyRate = Math.round(ratbDifficulty.getRating());
+                int lengthRate = Math.round(ratbLength.getRating());
+
+                final int qualityDifference = qualityRate - savedQualityFinal;
+                final int difficultyDifference = difficultyRate - savedDifficultyFinal;
+                final int lengthDifference = lengthRate - savedLengthFinal;
+
+                Utils.setDefaults(id + "_QUALITY", String.valueOf(qualityRate), context);
+                Utils.setDefaults(id + "_DIFFICULTY", String.valueOf(difficultyRate), context);
+                Utils.setDefaults(id + "_LENGTH", String.valueOf(lengthRate), context);
+
+                final DocumentReference docRef = FirebaseFirestore.getInstance().collection("tracksCollection").document(id);
+                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        int firestoreSavedQualitySum = Integer.valueOf(documentSnapshot.get("QUALITY_SUM").toString());
+                        int firestoreSavedDifficultySum = Integer.valueOf(documentSnapshot.get("DIFFICULTY_SUM").toString());
+                        int firestoreSavedLengthSum = Integer.valueOf(documentSnapshot.get("LENGTH_SUM").toString());
+                        int firestoreSavedVotesNumber = Integer.valueOf(documentSnapshot.get("NUMBER_OF_VOTES").toString());
+
+                        int newQualityRateToSave = firestoreSavedQualitySum + qualityDifference;
+                        int newDifficultyRateToSave = firestoreSavedDifficultySum + difficultyDifference;
+                        int newLengthRateToSave = firestoreSavedLengthSum + lengthDifference;
+                        int newVotesNumber = alreadyRatedFinal?firestoreSavedVotesNumber:(firestoreSavedVotesNumber+1);
+
+
+                        docRef.update("QUALITY_SUM", newQualityRateToSave,
+                                        "DIFFICULTY_SUM", newDifficultyRateToSave,
+                                        "LENGTH_SUM", newLengthRateToSave,
+                                        "NUMBER_OF_VOTES", newVotesNumber);
+
+
+                    }
+                });
+
                 rateDialog.dismiss();
             }
         });
