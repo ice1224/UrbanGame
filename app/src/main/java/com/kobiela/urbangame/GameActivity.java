@@ -57,7 +57,10 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
     private int numberMapType = 0;
+
     private List<Riddle> game = new ArrayList<>();
+    private Track track;
+
     private TextView tvRiddle;
     private TextView tvRiddleText;
     private int currentNumber = -1;
@@ -185,7 +188,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 dialog.dismiss();
                 if(currentNumber == game.size()){
-                    Utils.openRatingDialogWindow(trackId, "Oceń trasę!", GameActivity.this, true);
+                    Utils.openRatingDialogWindow(trackId, track, GameActivity.this, true);
                     //GameActivity.this.finish();
                 }
             }
@@ -260,7 +263,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void handleGame() {
         Intent intent = getIntent();
-        Track track = (Track)intent.getSerializableExtra("TRACK");
+        track = (Track)intent.getSerializableExtra("TRACK");
         game = track.getRiddles();
     }
 

@@ -35,6 +35,7 @@
         <string name="b_ptd_play">Play</string>
 
     <!--Popup rate track-->
+    <string name="prt_title">Rate the track!</string>
     <string name="prt_quality">Quality</string>
     <string name="prt_difficulty">Difficulty</string>
     <string name="prt_Length">Length</string>

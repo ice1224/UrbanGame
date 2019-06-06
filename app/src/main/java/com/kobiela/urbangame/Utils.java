@@ -91,7 +91,7 @@ public class Utils {
         }
     }
 
-    public static void openRatingDialogWindow(final String id, String title, final Context context, final boolean closeContextActivity) {
+    public static void openRatingDialogWindow(final String id, final Track track, final Context context, final boolean closeContextActivity) {
         final Dialog rateDialog = new Dialog(context);
         rateDialog.setContentView(R.layout.popup_track_rate);
 
@@ -131,7 +131,7 @@ public class Utils {
         final int savedLengthFinal = savedLength;
         final boolean alreadyRatedFinal = alreadyRated;
 
-        tvRateTrackTitle.setText(title);
+        tvRateTrackTitle.setText(context.getString(R.string.prt_title));
         bCancelRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,28 +155,17 @@ public class Utils {
                 Utils.setDefaults(id + "_LENGTH", String.valueOf(lengthRate), context);
 
                 final DocumentReference docRef = FirebaseFirestore.getInstance().collection("tracksCollection").document(id);
-                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        int firestoreSavedQualitySum = Integer.valueOf(documentSnapshot.get("QUALITY_SUM").toString());
-                        int firestoreSavedDifficultySum = Integer.valueOf(documentSnapshot.get("DIFFICULTY_SUM").toString());
-                        int firestoreSavedLengthSum = Integer.valueOf(documentSnapshot.get("LENGTH_SUM").toString());
-                        int firestoreSavedVotesNumber = Integer.valueOf(documentSnapshot.get("NUMBER_OF_VOTES").toString());
 
-                        int newQualityRateToSave = firestoreSavedQualitySum + qualityDifference;
-                        int newDifficultyRateToSave = firestoreSavedDifficultySum + difficultyDifference;
-                        int newLengthRateToSave = firestoreSavedLengthSum + lengthDifference;
-                        int newVotesNumber = alreadyRatedFinal?firestoreSavedVotesNumber:(firestoreSavedVotesNumber+1);
+                int newQualityRateToSave = track.getQualityRateSum() + qualityDifference;
+                int newDifficultyRateToSave = track.getDifficultyRateSum() + difficultyDifference;
+                int newLengthRateToSave = track.getLengthRateSum() + lengthDifference;
+                int newVotesNumber = alreadyRatedFinal?track.getNumberOfVotes():(track.getNumberOfVotes()+1);
 
 
-                        docRef.update("QUALITY_SUM", newQualityRateToSave,
-                                        "DIFFICULTY_SUM", newDifficultyRateToSave,
-                                        "LENGTH_SUM", newLengthRateToSave,
-                                        "NUMBER_OF_VOTES", newVotesNumber);
-
-
-                    }
-                });
+                docRef.update("QUALITY_SUM", newQualityRateToSave,
+                        "DIFFICULTY_SUM", newDifficultyRateToSave,
+                        "LENGTH_SUM", newLengthRateToSave,
+                        "NUMBER_OF_VOTES", newVotesNumber);
 
                 rateDialog.dismiss();
             }

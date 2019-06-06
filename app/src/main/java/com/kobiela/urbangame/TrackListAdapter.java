@@ -98,7 +98,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    Utils.openRatingDialogWindow(idsList.get(position), title, context, false);
+                    Utils.openRatingDialogWindow(idsList.get(position), trackList.get(position), context, false);
                 }
 
 

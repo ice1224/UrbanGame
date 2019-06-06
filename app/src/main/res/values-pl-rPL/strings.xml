@@ -62,6 +62,7 @@
     <string name="toast_something_wrong">Coś poszło nie tak!</string>
 
     <!--Popup rate track-->
+    <string name="prt_title">Oceń trasę!</string>
     <string name="prt_quality">Jakość</string>
     <string name="prt_difficulty">Trudność</string>
     <string name="prt_Length">Długość</string>
