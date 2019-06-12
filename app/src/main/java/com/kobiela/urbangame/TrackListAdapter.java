@@ -10,24 +10,20 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +42,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
     @NonNull
     @Override
     public TrackListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_track_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_track_item, parent, false);
         return new TrackListViewHolder(view);
     }
 
@@ -62,21 +58,19 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         holder.trackTitle.setText(title);
         holder.qualityAverage.setText(String.valueOf(qualityAverage));
 
-        if(Utils.searchDefaults(idsList.get(position), context)){
+        if (Utils.searchDefaults(idsList.get(position), context)) {
             holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorAccentOther));
-        }
-        else{
+        } else {
             holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
-        if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
+        if (Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)) {
             holder.parentLayout.setBackgroundResource(R.color.colorAccentOther);
             holder.ratingStarIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent));
-            if(Utils.searchDefaults(idsList.get(position), context)){
+            if (Utils.searchDefaults(idsList.get(position), context)) {
                 holder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             }
-        }
-        else{
+        } else {
             holder.parentLayout.setBackgroundResource(R.color.colorPrimary);
         }
 
@@ -88,10 +82,10 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         });
     }
 
-    private void openDialogWindow(final int position, final String title, String description, String location, String author){
+    private void openDialogWindow(final int position, final String title, String description, String location, String author) {
         final Dialog dialog = new Dialog(context);
 
-        if(Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)){
+        if (Utils.searchDefaults(idsList.get(position) + "_FINISHED", context)) {
             dialog.setContentView(R.layout.popup_track_details_rate);
             Button bRateTrack = dialog.findViewById(R.id.b_rate_track);
             bRateTrack.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +97,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
 
 
             });
-        }
-        else{
+        } else {
             dialog.setContentView(R.layout.popup_track_details);
         }
 
@@ -122,7 +115,6 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         Button bCancelGame = dialog.findViewById(R.id.b_cancel_game);
 
 
-
         tvTrackTitle.setText(title);
         tvTrackDescription.setText(description);
 
@@ -136,7 +128,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         bPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame(idsList.get(position),position);
+                startGame(idsList.get(position), position);
                 dialog.cancel();
             }
         });
@@ -158,19 +150,19 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
                         if (task.isSuccessful()) {
                             ArrayList<Riddle> riddles = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String lat = ((HashMap)document.get("COORDS")).get("latitude").toString();
-                                    String lng = ((HashMap)document.get("COORDS")).get("longitude").toString();
-                                    String riddle = document.get("RIDDLE").toString();
+                                String lat = ((HashMap) document.get("COORDS")).get("latitude").toString();
+                                String lng = ((HashMap) document.get("COORDS")).get("longitude").toString();
+                                String riddle = document.get("RIDDLE").toString();
 
-                                    riddles.add(new Riddle(lat,lng,riddle));
+                                riddles.add(new Riddle(lat, lng, riddle));
                             }
                             Intent intent = new Intent(context, GameActivity.class);
                             trackList.get(position).setRiddles(riddles);
-                           // intent.putStringArrayListExtra("GAME", game);
+                            // intent.putStringArrayListExtra("GAME", game);
                             intent.putExtra("TRACK_ID", id);
                             intent.putExtra("TRACK", trackList.get(position));
                             context.startActivity(intent);
-                            ((Activity)context).finish();
+                            ((Activity) context).finish();
                         } else {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();
                         }
@@ -189,6 +181,7 @@ class TrackListAdapter extends RecyclerView.Adapter<TrackListAdapter.TrackListVi
         TextView trackTitle, trackLocation, qualityAverage;
         ImageView ratingStarIcon;
         ConstraintLayout parentLayout;
+
         public TrackListViewHolder(View itemView) {
             super(itemView);
             trackTitle = itemView.findViewById(R.id.tv_item_track_title);

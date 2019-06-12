@@ -4,23 +4,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
@@ -56,7 +51,7 @@ public class Utils {
         editor.apply();
     }
 
-    public static boolean searchDefaults(String key, Context context){
+    public static boolean searchDefaults(String key, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.contains(key);
     }
@@ -67,7 +62,7 @@ public class Utils {
     }
 
     public static void changeMapType(Context context, int numberMapType, GoogleMap mMap) {
-        switch (numberMapType){
+        switch (numberMapType) {
             case 0: {
                 mMap.setMapStyle(new MapStyleOptions("[]"));
                 break;
@@ -78,9 +73,15 @@ public class Utils {
                                 context, R.raw.retro_theme));
                 break;
             }
-            case 2: mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); break;
-            case 3: mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); break;
-            case 4: mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); break;
+            case 2:
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case 3:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case 4:
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
             case 5: {
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 mMap.setMapStyle(
@@ -110,17 +111,17 @@ public class Utils {
         int savedLength = 0;
         boolean alreadyRated = false;
 
-        if(Utils.searchDefaults(id + "_QUALITY", context)){
+        if (Utils.searchDefaults(id + "_QUALITY", context)) {
             savedQuality = Integer.valueOf(Utils.getDefaults(id + "_QUALITY", context));
             ratbQuality.setRating(Float.valueOf(Utils.getDefaults(id + "_QUALITY", context)));
             alreadyRated = true;
         }
-        if(Utils.searchDefaults(id + "_DIFFICULTY", context)){
+        if (Utils.searchDefaults(id + "_DIFFICULTY", context)) {
             savedDifficulty = Integer.valueOf(Utils.getDefaults(id + "_DIFFICULTY", context));
             ratbDifficulty.setRating(Float.valueOf(Utils.getDefaults(id + "_DIFFICULTY", context)));
             alreadyRated = true;
         }
-        if(Utils.searchDefaults(id + "_LENGTH", context)){
+        if (Utils.searchDefaults(id + "_LENGTH", context)) {
             savedLength = Integer.valueOf(Utils.getDefaults(id + "_LENGTH", context));
             ratbLength.setRating(Float.valueOf(Utils.getDefaults(id + "_LENGTH", context)));
             alreadyRated = true;
@@ -159,7 +160,7 @@ public class Utils {
                 int newQualityRateToSave = track.getQualityRateSum() + qualityDifference;
                 int newDifficultyRateToSave = track.getDifficultyRateSum() + difficultyDifference;
                 int newLengthRateToSave = track.getLengthRateSum() + lengthDifference;
-                int newVotesNumber = alreadyRatedFinal?track.getNumberOfVotes():(track.getNumberOfVotes()+1);
+                int newVotesNumber = alreadyRatedFinal ? track.getNumberOfVotes() : (track.getNumberOfVotes() + 1);
 
 
                 docRef.update("QUALITY_SUM", newQualityRateToSave,
@@ -174,7 +175,7 @@ public class Utils {
         rateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if(closeContextActivity) {
+                if (closeContextActivity) {
                     ((Activity) context).finish();
                 }
             }

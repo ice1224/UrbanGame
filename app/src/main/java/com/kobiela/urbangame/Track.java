@@ -107,16 +107,16 @@ public class Track implements Serializable {
         this.numberOfVotes = numberOfVotes;
     }
 
-    public float getQualityAverage(){
-        return  Math.round((qualityRateSum*1.0f/numberOfVotes)*100.f)/100.f;
+    public float getQualityAverage() {
+        return Math.round((qualityRateSum * 1.0f / numberOfVotes) * 100.f) / 100.f;
     }
 
-    public float getDifficultyAverage(){
-        return  Math.round((difficultyRateSum*1.0f/numberOfVotes)*100.f)/100.f;
+    public float getDifficultyAverage() {
+        return Math.round((difficultyRateSum * 1.0f / numberOfVotes) * 100.f) / 100.f;
     }
 
-    public float getLengthAverage(){
-        return  Math.round((lengthRateSum*1.0f/numberOfVotes)*100.f)/100.f;
+    public float getLengthAverage() {
+        return Math.round((lengthRateSum * 1.0f / numberOfVotes) * 100.f) / 100.f;
     }
 
 }

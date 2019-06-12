@@ -8,16 +8,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,  String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
                 if (grantResults.length > 0) {
-                    if(grantResults[0] == -1) {
+                    if (grantResults[0] == -1) {
                         this.finish();
                     }
                 }
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void handleButtons(){
+    public void handleButtons() {
         bPlay = findViewById(R.id.b_play);
         bCreate = findViewById(R.id.b_create);
         bInfo = findViewById(R.id.b_info);
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer.release();
         mediaPlayer = null;
     }
-
 
 
 }

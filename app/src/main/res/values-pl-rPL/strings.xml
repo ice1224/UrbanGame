@@ -73,4 +73,6 @@
     <string name="prt_quality">Jakość</string>
     <string name="prt_difficulty">Trudność</string>
     <string name="prt_Length">Długość</string>
+    <string name="toast_track_saved">Trasa zapisana!</string>
+    <string name="toast_empty_title">Pole tytuł nie może być puste!</string>
 </resources>

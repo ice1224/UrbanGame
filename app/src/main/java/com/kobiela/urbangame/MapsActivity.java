@@ -1,35 +1,23 @@
 package com.kobiela.urbangame;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.os.Parcelable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.text.InputType;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -65,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-       handleButtons();
+        handleButtons();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -77,13 +65,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void handleButtons(){
+    private void handleButtons() {
         bMapChange = findViewById(R.id.b_map_change);
         bMapChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.changeMapType(MapsActivity.this, numberMapType, mMap);
-                numberMapType = ++numberMapType%6;
+                numberMapType = ++numberMapType % 6;
             }
         });
 
@@ -109,17 +97,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bMapSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(markers.size()>0) {
+                if (markers.size() > 0) {
                     saveAndSummarize();
-                }
-                else{
+                } else {
                     Toast.makeText(MapsActivity.this, getString(R.string.toast_empty_track), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
-
 
 
     @SuppressLint("MissingPermission")
@@ -144,15 +130,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
 
 
-
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(latLng)
                         .draggable(true)
-                        );
-                openDialogWindow(marker,true);
+                );
+                openDialogWindow(marker, true);
             }
         });
 
@@ -203,15 +188,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        if(isMarkerNew){
+        if (isMarkerNew) {
             iv_icon.setImageResource(R.drawable.ic_add_location_black_24dp);
             tv_new_edit_marker.setText(R.string.tv_ma_new_marker);
-            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, numberOfAll+1, numberOfAll+1));
-        }
-        else {
+            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, numberOfAll + 1, numberOfAll + 1));
+        } else {
             iv_icon.setImageResource(R.drawable.ic_edit_location_black_24dp);
             tv_new_edit_marker.setText(R.string.tv_ma_edit_marker);
-            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, ind+1, numberOfAll));
+            tv_number_of_markers.setText(getString(R.string.tv_ma_which_marker, ind + 1, numberOfAll));
             et_new_edit_riddle.setText(riddles.get(ind));
         }
 
@@ -219,12 +203,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         b_add_riddle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isMarkerNew) {
+                if (isMarkerNew) {
                     riddles.add(et_new_edit_riddle.getText().toString());
                     markers.add(marker);
-                }
-                else{
-                    riddles.set(ind,et_new_edit_riddle.getText().toString());
+                } else {
+                    riddles.set(ind, et_new_edit_riddle.getText().toString());
                 }
                 buttonClicked = true;
                 dialog.cancel();
@@ -235,7 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 marker.remove();
-                if(!isMarkerNew) {
+                if (!isMarkerNew) {
                     markers.remove(ind);
                     riddles.remove(ind);
                 }
@@ -247,7 +230,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if(!buttonClicked && isMarkerNew) {
+                if (!buttonClicked && isMarkerNew) {
                     marker.remove();
                 }
             }

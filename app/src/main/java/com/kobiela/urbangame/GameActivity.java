@@ -1,7 +1,6 @@
 package com.kobiela.urbangame;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,14 +11,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -39,14 +36,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.w3c.dom.Text;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,20 +99,19 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onSuccess(Location location) {
                                 if (location != null && startCheckingPosition) {
 
-
+/*
                                 Toast.makeText(GameActivity.this,"TO FOUND:\n" +
                                                 String.valueOf(currentRiddleCoords.latitude) + "   |   " + String.valueOf(currentRiddleCoords.longitude) + "\n" +
                                                 "CURRENT:\n" +
                                                 String.valueOf(Utils.round(location.getLatitude(),ROUNDING_ACC)) + "   |   " + String.valueOf(Utils.round(location.getLongitude(), ROUNDING_ACC)),
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_LONG).show();*/
 
 
 
                                     if (currentNumber < game.size() && isPositionInRange(location.getLatitude(), location.getLongitude())) {
-                                        if(isApplicationStopped){
+                                        if (isApplicationStopped) {
                                             sendNotification();
-                                        }
-                                        else {
+                                        } else {
                                             openDialogWindowSuccess();
                                         }
                                         updateView();
@@ -133,7 +124,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         startLocationUpdates();
     }
 
-    private void handleButtons(){
+    private void handleButtons() {
         bMapInfo = findViewById(R.id.b_map_info);
         bMapInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,24 +151,24 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Utils.changeMapType(GameActivity.this, numberMapType, mMap);
-                numberMapType = ++numberMapType%6;
+                numberMapType = ++numberMapType % 6;
             }
         });
     }
 
-    private boolean isPositionInRange(double currentLatitude, double currentLongitude){
-        double latDif = Math.abs(Utils.round(currentLatitude, ROUNDING_ACC) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.latitude * Math.pow(10,ROUNDING_ACC));
-        double lngDif = Math.abs(Utils.round(currentLongitude, ROUNDING_ACC) * Math.pow(10,ROUNDING_ACC) - currentRiddleCoords.longitude * Math.pow(10,ROUNDING_ACC));
+    private boolean isPositionInRange(double currentLatitude, double currentLongitude) {
+        double latDif = Math.abs(Utils.round(currentLatitude, ROUNDING_ACC) * Math.pow(10, ROUNDING_ACC) - currentRiddleCoords.latitude * Math.pow(10, ROUNDING_ACC));
+        double lngDif = Math.abs(Utils.round(currentLongitude, ROUNDING_ACC) * Math.pow(10, ROUNDING_ACC) - currentRiddleCoords.longitude * Math.pow(10, ROUNDING_ACC));
         return (latDif <= RANGE && lngDif <= RANGE);
     }
 
-    private void openDialogWindowSuccess(){
+    private void openDialogWindowSuccess() {
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.popup_success);
 
         TextView congratulationsText = dialog.findViewById(R.id.tv_congrats_text);
-        if(currentNumber == game.size()-1){
+        if (currentNumber == game.size() - 1) {
             congratulationsText.setText(getString(R.string.tv_ga_final_congrats_text));
             congratulationsText.setTextSize(20);
         }
@@ -187,7 +178,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if(currentNumber == game.size()){
+                if (currentNumber == game.size()) {
                     Utils.openRatingDialogWindow(trackId, track, GameActivity.this, true);
                     //GameActivity.this.finish();
                 }
@@ -196,14 +187,14 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if(currentNumber == game.size())
+                if (currentNumber == game.size())
                     GameActivity.this.finish();
             }
         });
         dialog.show();
     }
 
-    private void openDialogWindowContinue(final String savedState){
+    private void openDialogWindowContinue(final String savedState) {
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.popup_continue_game);
@@ -222,7 +213,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 dialog.dismiss();
                 riddleNumber = Integer.valueOf(savedState);
-                while(currentNumber!=riddleNumber) {
+                while (currentNumber != riddleNumber) {
                     updateView();
                 }
             }
@@ -240,7 +231,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void sendNotification(){
+    private void sendNotification() {
         Intent intent = getIntent();
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
@@ -253,7 +244,7 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
                 .setContentText(getString(R.string.notification_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
-                .setVibrate(new long[] { 1000, 1000})
+                .setVibrate(new long[]{1000, 1000})
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setAutoCancel(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(GameActivity.this);
@@ -263,43 +254,41 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void handleGame() {
         Intent intent = getIntent();
-        track = (Track)intent.getSerializableExtra("TRACK");
+        track = (Track) intent.getSerializableExtra("TRACK");
         game = track.getRiddles();
     }
 
-    public void checkIfSaved(){
+    public void checkIfSaved() {
         trackId = getIntent().getStringExtra("TRACK_ID");
 
         String savedState = Utils.getDefaults(trackId, this);
 
-        if(savedState!=null){
+        if (savedState != null) {
             openDialogWindowContinue(savedState);
-        }
-        else{
+        } else {
             startCheckingPosition = true;
         }
     }
 
-    private void updateView(){
-        if(currentNumber < game.size()) {
+    private void updateView() {
+        if (currentNumber < game.size()) {
             if (currentNumber >= 0) {
                 mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(game.get(currentNumber).getLat(),game.get(currentNumber).getLng()))
-                        .title(String.valueOf(currentNumber+1))
+                        .position(new LatLng(game.get(currentNumber).getLat(), game.get(currentNumber).getLng()))
+                        .title(String.valueOf(currentNumber + 1))
                         .snippet(game.get(currentNumber).getRiddleText())
                 );
             }
             ++currentNumber;
             System.out.println(currentNumber);
-            if(currentNumber < game.size()) {
+            if (currentNumber < game.size()) {
                 currentRiddleCoords = new LatLng(
                         Utils.round(game.get(currentNumber).getLat(), ROUNDING_ACC),
                         Utils.round(game.get(currentNumber).getLng(), ROUNDING_ACC));
                 tvRiddleText.setText(game.get(currentNumber).getRiddleText());
-                tvRiddle.setText(getString(R.string.tv_ga_riddle,currentNumber+1, game.size()));
+                tvRiddle.setText(getString(R.string.tv_ga_riddle, currentNumber + 1, game.size()));
             }
-        }
-        else{
+        } else {
             stopLocationUpdates();
             openDialogWindowSuccess();
         }
@@ -334,11 +323,10 @@ public class GameActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onDestroy() {
         super.onDestroy();
         stopLocationUpdates();
-        if(currentNumber!=game.size()) {
+        if (currentNumber != game.size()) {
             System.out.println("-----------------" + trackId + "-------------------");
             Utils.setDefaults(trackId, String.valueOf(currentNumber), this);
-        }
-        else{
+        } else {
             Utils.removeDefaults(trackId, this);
             Utils.setDefaults(trackId + "_FINISHED", "TRUE", this);
         }

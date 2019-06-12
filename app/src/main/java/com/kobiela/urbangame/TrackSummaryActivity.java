@@ -1,8 +1,8 @@
 package com.kobiela.urbangame;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -45,12 +45,11 @@ public class TrackSummaryActivity extends AppCompatActivity {
         bSaveTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etTrackTitle.getText().toString().length() == 0) {
-                    Toast.makeText(TrackSummaryActivity.this, "Title field is empty!", Toast.LENGTH_LONG).show();
-                }
-                else{
+                if (etTrackTitle.getText().toString().length() == 0) {
+                    Toast.makeText(TrackSummaryActivity.this, R.string.toast_empty_title, Toast.LENGTH_LONG).show();
+                } else {
                     saveToFirebase();
-                    Toast.makeText(TrackSummaryActivity.this, "Track saved!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TrackSummaryActivity.this, R.string.toast_track_saved, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(TrackSummaryActivity.this, MapsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(MapsActivity.SHOULD_FINISH, true);
@@ -65,15 +64,15 @@ public class TrackSummaryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ArrayList<String> gameAL = intent.getStringArrayListExtra("GAME");
 
-        for (int i = 0; i <= gameAL.size()-3; i=i+3) {
+        for (int i = 0; i <= gameAL.size() - 3; i = i + 3) {
             System.out.print(gameAL.get(i) + "   |   ");
-            System.out.print(gameAL.get(i+1) + "   |   ");
-            System.out.print(gameAL.get(i+2));
+            System.out.print(gameAL.get(i + 1) + "   |   ");
+            System.out.print(gameAL.get(i + 2));
             System.out.println();
             game.add(new Riddle(
                     gameAL.get(i),
-                    gameAL.get(i+1),
-                    gameAL.get(i+2)));
+                    gameAL.get(i + 1),
+                    gameAL.get(i + 2)));
         }
     }
 
@@ -82,7 +81,7 @@ public class TrackSummaryActivity extends AppCompatActivity {
         String description = etTrackDescription.getText().toString();
         String location = etTrackLocation.getText().toString();
         String author = etTrackAuthor.getText().toString();
-        Map<String,Object> dataToSave = new HashMap<>();
+        Map<String, Object> dataToSave = new HashMap<>();
         dataToSave.put("TITLE", title);
         dataToSave.put("DESCRIPTION", description);
         dataToSave.put("LOCATION", location);
@@ -96,10 +95,10 @@ public class TrackSummaryActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         for (int i = 0; i < game.size(); i++) {
-                            LatLng coords = new LatLng(game.get(i).getLat(),game.get(i).getLng());
+                            LatLng coords = new LatLng(game.get(i).getLat(), game.get(i).getLng());
                             String riddle = game.get(i).getRiddleText();
 
-                            Map<String,Object> riddlesToSave = new HashMap<>();
+                            Map<String, Object> riddlesToSave = new HashMap<>();
                             riddlesToSave.put("COORDS", coords);
                             riddlesToSave.put("RIDDLE", riddle);
 

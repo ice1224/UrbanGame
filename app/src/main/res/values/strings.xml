@@ -96,5 +96,7 @@
     <string name="toast_empty_track">Track cannot be empty!</string>
     <string name="toast_something_wrong">Something went wrong!</string>
     <string name="title_activity_maps">Create</string>
+    <string name="toast_track_saved">Track saved!</string>
+    <string name="toast_empty_title">Title field is empty!</string>
 
 </resources>

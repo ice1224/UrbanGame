@@ -1,8 +1,8 @@
 package com.kobiela.urbangame;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -61,9 +60,9 @@ public class TrackChoiceActivity extends AppCompatActivity {
                 idsList.clear();
                 for (int i = 0; i < trackListFull.size(); i++) {
 
-                    if(trackListFull.get(i).getTitle().toLowerCase().contains(s.toString().toLowerCase())
-                    || trackListFull.get(i).getDescription().toLowerCase().contains(s.toString().toLowerCase())
-                    || trackListFull.get(i).getLocation().toLowerCase().contains(s.toString().toLowerCase())){
+                    if (trackListFull.get(i).getTitle().toLowerCase().contains(s.toString().toLowerCase())
+                            || trackListFull.get(i).getDescription().toLowerCase().contains(s.toString().toLowerCase())
+                            || trackListFull.get(i).getLocation().toLowerCase().contains(s.toString().toLowerCase())) {
                         trackList.add(trackListFull.get(i));
                         idsList.add(idsListFull.get(i));
                     }
@@ -96,8 +95,8 @@ public class TrackChoiceActivity extends AppCompatActivity {
                                 int difficultySum = Integer.valueOf(document.get("DIFFICULTY_SUM").toString());
                                 int lengthSum = Integer.valueOf(document.get("LENGTH_SUM").toString());
                                 int numberOfVotes = Integer.valueOf(document.get("NUMBER_OF_VOTES").toString());
-                                trackListFull.add(new Track(title,description,location,author,qualitySum,difficultySum,lengthSum,numberOfVotes));
-                                trackList.add(new Track(title,description,location,author,qualitySum,difficultySum,lengthSum,numberOfVotes));
+                                trackListFull.add(new Track(title, description, location, author, qualitySum, difficultySum, lengthSum, numberOfVotes));
+                                trackList.add(new Track(title, description, location, author, qualitySum, difficultySum, lengthSum, numberOfVotes));
                                 idsListFull.add(document.getId());
                                 idsList.add(document.getId());
                             }
