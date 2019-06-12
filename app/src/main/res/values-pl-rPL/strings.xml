@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">UrbanGame</string>
+    <string name="title_activity_track_choice">TrackChoiceActivity</string>
     <string name="title_activity_maps">Twórz</string>
     <string name="title_activity_game">Graj</string>
 
 
-    <string name="title_activity_track_choice">TrackChoiceActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
+    <!--Main Activity-->
     <string name="b_play">Graj</string>
     <string name="b_add_track">Twórz</string>
     <string name="b_info">Info</string>
-    <string name="tv_first">To jest aplikacja Urban Game. Gra miejska to gra, która do rozgrywki wykorzystuje teren, miasto.
-        Ta aplikacja pozwala Ci tworzyć i grać w gry miejskie. Każda gra (trasa) składa się z pewnej liczby zagadek w ustalonej kolejności.
-        Każda zagadka to podpowiedź dotycząca miejsca, które należy odnaleźć. Trasa może dotyczyć np. najpiękniejszych miejsc w Twoim mieście,
-        najlepszych restauracji czy miejsc o wartości historycznej.</string>
-    <string name="tv_second">Graj - w tym trybie możesz wybrać i zagrać w jedną z istniejących rozgrywek. Na początku otrzymujesz pierwszą
-        zagadkę, mającą nakierować Cię do pierwszej lokacji. Kiedy dotrzesz do tej lokacji ze swoim urządzeniem, otrzymasz kolejną zagadkę
-        do rozwiązania. Jeśli uda Ci się rozwiązać wszystkie - wygrywasz.
-        </string>
-    <string name="tv_third">Twórz - w tym trybie tworzysz własną trasę, dodając na mapie znaczniki ze wskazówkami dotyczącymi poszczególnych
-        miejsc. Po dodaniu wszystkich znaczników, wypełniasz krótkie podsumowanie trasy (tytuł, opis, lokalizacja), ułatwiające innym
-        użytkownikom wyszukanie Twojej trasy.
-        </string>
+
+        <!--Popup info-->
+        <string name="tv_first">To jest aplikacja Urban Game. Gra miejska to gra, która do rozgrywki wykorzystuje teren, miasto.
+            Ta aplikacja pozwala Ci tworzyć i grać w gry miejskie. Każda gra (trasa) składa się z pewnej liczby zagadek w ustalonej kolejności.
+            Każda zagadka to podpowiedź dotycząca miejsca, które należy odnaleźć. Trasa może dotyczyć np. najpiękniejszych miejsc w Twoim mieście,
+            najlepszych restauracji czy miejsc o wartości historycznej.</string>
+        <string name="tv_second">Graj - w tym trybie możesz wybrać i zagrać w jedną z istniejących rozgrywek. Na początku otrzymujesz pierwszą
+            zagadkę, mającą nakierować Cię do pierwszej lokacji. Kiedy dotrzesz do tej lokacji ze swoim urządzeniem, otrzymasz kolejną zagadkę
+            do rozwiązania. Jeśli uda Ci się rozwiązać wszystkie - wygrywasz.
+            </string>
+        <string name="tv_third">Twórz - w tym trybie tworzysz własną trasę, dodając na mapie znaczniki ze wskazówkami dotyczącymi poszczególnych
+            miejsc. Po dodaniu wszystkich znaczników, wypełniasz krótkie podsumowanie trasy (tytuł, opis, lokalizacja), ułatwiające innym
+            użytkownikom wyszukanie Twojej trasy.
+            </string>
+
+
+    <!--Track Choice Activity-->
     <string name="tv_tca_choose_track_title">Wybierz trasę!</string>
     <string name="hint_tca_search">Szukaj</string>
-    <string name="b_ptd_cancel">Anuluj</string>
-    <string name="b_ptd_rate">Oceń</string>
-    <string name="b_ptd_play">Graj</string>
+        <!--Popup track details-->
+        <string name="b_ptd_cancel">Anuluj</string>
+        <string name="b_ptd_rate">Oceń</string>
+        <string name="b_ptd_play">Graj</string>
+
+
+    <!--Popup rate track-->
     <string name="tv_ga_riddle">Zagadka %1$d / %2$d</string>
     <string name="tv_ps_congratulations">Gratulacje!</string>
     <string name="tv_ps_congratulations_text">Znalazłeś właściwą lokację</string>

@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name">UrbanGame</string>
     <string name="title_activity_game">Play</string>
-
     <string name="title_activity_track_choice">TrackChoiceActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <!--Main Activity-->
     <string name="b_play">Play</string>
     <string name="b_add_track">Create</string>
     <string name="b_info">Info</string>
+
         <!--Popup info-->
         <string name="tv_first">This is Urban Game. Urban game is type of game based on your movement and location. This
             game allows you to play and create urban games. Every game or track consists of several riddles in particular order.
